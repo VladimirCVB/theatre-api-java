@@ -30,15 +30,15 @@ public class FakeDataStore {
         studentList.add(new Student(4, "Miranda Winslet", china));
 
         //Working on Theater
-        Eveniment eveniment = new Eveniment("Romeo and Juliet", "Unique spectacle");
-        evenimentsList.add(eveniment);
-        Eveniment eveniment2 = new Eveniment("Romeo and Juliet 2", "Unique spectacle");
-        evenimentsList.add(eveniment2);
-
         for(int i = 0; i < 10; i++){
             Seat seat = new Seat(i + "A", 12.5);
             seatsList.add(seat);
         }
+
+        Eveniment eveniment = new Eveniment("Romeo and Juliet", "Unique spectacle", seatsList);
+        evenimentsList.add(eveniment);
+        Eveniment eveniment2 = new Eveniment("Romeo and Juliet 2", "Unique spectacle", seatsList);
+        evenimentsList.add(eveniment2);
 
         Ticket ticket = new Ticket(eveniment, LocalDate.now(), seatsList);
     }

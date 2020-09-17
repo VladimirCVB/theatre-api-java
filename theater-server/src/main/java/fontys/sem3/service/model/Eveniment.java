@@ -1,8 +1,12 @@
 package fontys.sem3.service.model;
 
+import jdk.dynalink.linker.LinkerServices;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 @XmlRootElement
 public class Eveniment {
@@ -12,12 +16,14 @@ public class Eveniment {
     private String name;
     private LocalDate date;
     private String description;
+    private List<Seat> seats = new ArrayList<Seat>();
 
-    public Eveniment(String name, String description) {
+    public Eveniment(String name, String description, List<Seat> seats) {
         this.id = idSeeder;
         this.name = name;
         this.description = description;
         this.date = LocalDate.now();
+        this.seats = seats;
 
         idSeeder++;
     }
@@ -36,6 +42,8 @@ public class Eveniment {
     }
 
     public LocalDate getDate() {return date;}
+
+    public List<Seat> getSeats() { return seats; }
 
     @Override
     public boolean equals(Object o) {

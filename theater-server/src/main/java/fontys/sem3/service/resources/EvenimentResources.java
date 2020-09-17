@@ -3,6 +3,7 @@ package fontys.sem3.service.resources;
 
 import fontys.sem3.service.model.Country;
 import fontys.sem3.service.model.Eveniment;
+import fontys.sem3.service.model.Seat;
 import fontys.sem3.service.model.Student;
 import fontys.sem3.service.repository.*;
 
@@ -71,6 +72,19 @@ public class EvenimentResources {
             return Response.noContent().build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).entity("Please provide a valid event id.").build();
+        }
+    }
+
+    @GET //GET at http://localhost:XXXX/students/3
+    @Path("/{id}/seats")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEvenimentSeats(@PathParam("id") int id) {
+        // StudentsRepository studentsRepository = RepositoryFactory.getStudentsRepository();
+        List<Seat> seats = fakeDataStore.getEveniment(id).getSeats();//studentsRepository.get(stNr);
+        if (seats == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the eveniment.").build();
+        } else {
+            return Response.ok(seats).build();
         }
     }
 }
