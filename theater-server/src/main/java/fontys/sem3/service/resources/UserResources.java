@@ -18,7 +18,7 @@ public class UserResources {
     // this has to be static because the service is stateless:
     private static final FakeDataStore fakeDataStore = new FakeDataStore();
 
-    @GET //GET at http://localhost:XXXX/students?
+    @GET //GET at http://localhost:XXXX/theater/users
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers() {
         List<User> users = fakeDataStore.getUsers();
@@ -27,16 +27,16 @@ public class UserResources {
         return Response.ok(entity).build();
     }
 
-    @GET //GET at http://localhost:XXXX/students/3
-    @Path("/{id}/seats")
+    @GET //GET at http://localhost:XXXX/theater/users/3
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEvenimentSeats(@PathParam("id") int id) {
-        // StudentsRepository studentsRepository = RepositoryFactory.getStudentsRepository();
-        List<Seat> seats = fakeDataStore.getEveniment(id).getSeats();//studentsRepository.get(stNr);
-        if (seats == null) {
+    public Response getUser(@PathParam("id") int id) {
+        //getting user from the users list
+        User user = fakeDataStore.getUser(id);
+        if (user == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the eveniment.").build();
         } else {
-            return Response.ok(seats).build();
+            return Response.ok(user).build();
         }
     }
 }

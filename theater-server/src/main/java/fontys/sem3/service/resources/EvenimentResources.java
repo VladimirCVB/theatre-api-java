@@ -17,12 +17,11 @@ public class EvenimentResources {
     // this has to be static because the service is stateless:
     private static final FakeDataStore fakeDataStore = new FakeDataStore();
 
-    @GET //GET at http://localhost:XXXX/students/3
+    @GET //GET at http://localhost:XXXX/theater/events/1
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEvenimentPath(@PathParam("id") int id) {
-        // StudentsRepository studentsRepository = RepositoryFactory.getStudentsRepository();
-        Eveniment eveniment = fakeDataStore.getEveniment(id);//studentsRepository.get(stNr);
+        Eveniment eveniment = fakeDataStore.getEveniment(id);
         if (eveniment == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the eveniment.").build();
         } else {
@@ -30,7 +29,7 @@ public class EvenimentResources {
         }
     }
 
-    @GET //GET at http://localhost:XXXX/students?
+    @GET //GET at http://localhost:XXXX/theater/events
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllEveniments() {
         List<Eveniment> eveniments = fakeDataStore.getEveniments();
@@ -40,7 +39,7 @@ public class EvenimentResources {
     }
 
 
-    @DELETE //DELETE at http://localhost:XXXX/students/3
+    @DELETE //DELETE at http://localhost:XXXX/theater/events/delete/1
     @Path("/delete/{id}")
     public Response deleteEveniment(@PathParam("id") int id) {
         fakeDataStore.deleteEveniment(id);
@@ -48,7 +47,7 @@ public class EvenimentResources {
         return Response.noContent().build();
     }
 
-    @POST //POST at http://localhost:XXXX/students/
+    @POST //POST at http://localhost:XXXX/theater/events
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createEveniment(Eveniment eveniment) {
         if (!fakeDataStore.addEveniment(eveniment)){
@@ -61,7 +60,7 @@ public class EvenimentResources {
         }
     }
 
-    @PUT //PUT at http://localhost:XXXX/students/
+    @PUT //PUT at http://localhost:XXXX/theater/events/update/2
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/update/{id}")
     public Response updateEveniment(Eveniment eveniment) {
@@ -73,12 +72,12 @@ public class EvenimentResources {
         }
     }
 
-    @GET //GET at http://localhost:XXXX/students/3
+    @GET //GET at http://localhost:XXXX/theater/events/2/seats
     @Path("/{id}/seats")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEvenimentSeats(@PathParam("id") int id) {
-        // StudentsRepository studentsRepository = RepositoryFactory.getStudentsRepository();
-        List<Seat> seats = fakeDataStore.getEveniment(id).getSeats();//studentsRepository.get(stNr);
+
+        List<Seat> seats = fakeDataStore.getEveniment(id).getSeats();
         if (seats == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the eveniment.").build();
         } else {

@@ -72,4 +72,11 @@ public class FakeDataStore {
 
     public List<User> getUsers() {return this.users;}
 
+    public User getUser(int id){
+        for (User user : users) {
+            if (user.getId() == id)
+                return user;
+        }
+        return null;
+    }
 }
