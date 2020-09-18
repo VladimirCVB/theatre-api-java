@@ -1,10 +1,8 @@
 package fontys.sem3.service.resources;
 
 
-import fontys.sem3.service.model.Country;
 import fontys.sem3.service.model.Eveniment;
 import fontys.sem3.service.model.Seat;
-import fontys.sem3.service.model.Student;
 import fontys.sem3.service.repository.*;
 
 import javax.ws.rs.*;

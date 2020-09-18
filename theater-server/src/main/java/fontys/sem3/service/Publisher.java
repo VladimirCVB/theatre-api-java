@@ -29,8 +29,8 @@ class Publisher {
             System.out.println("Hosting resources at " + BASE_URI.toURL());
 
             System.out.println("Try the following GET operations in your internet browser: ");
-            String[] getOperations = {BASE_URI.toURL() + "students/hello",
-                    BASE_URI.toURL() + "students/2", BASE_URI.toURL() + "students", BASE_URI.toURL() + "students?country=BG", BASE_URI.toURL() + "/countries/BG"};
+            String[] getOperations = { BASE_URI.toURL() + "events", BASE_URI.toURL() + "events/0",
+                    BASE_URI.toURL() + "events/0/seats"};
             for (String getOperation : getOperations) {
                 System.out.println(getOperation);
             }
