@@ -4,6 +4,7 @@ package fontys.sem3.service.resources;
 import fontys.sem3.service.model.Eveniment;
 import fontys.sem3.service.model.Seat;
 import fontys.sem3.service.model.User;
+import fontys.sem3.service.model.UserAccount;
 import fontys.sem3.service.repository.*;
 
 import javax.ws.rs.*;
@@ -21,9 +22,9 @@ public class UserResources {
     @GET //GET at http://localhost:XXXX/theater/users
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers() {
-        List<User> users = fakeDataStore.getUsers();
+        List<UserAccount> users = fakeDataStore.getUsers();
 
-        GenericEntity<List<User>> entity = new GenericEntity<>(users) {  };
+        GenericEntity<List<UserAccount>> entity = new GenericEntity<>(users) {  };
         return Response.ok(entity).build();
     }
 
@@ -32,11 +33,11 @@ public class UserResources {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@PathParam("id") int id) {
         //getting user from the users list
-        User user = fakeDataStore.getUser(id);
-        if (user == null) {
+        UserAccount userAccount = fakeDataStore.getUserAccount(id);
+        if (userAccount == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the eveniment.").build();
         } else {
-            return Response.ok(user).build();
+            return Response.ok(userAccount).build();
         }
     }
 }

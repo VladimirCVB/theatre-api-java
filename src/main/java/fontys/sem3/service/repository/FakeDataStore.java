@@ -11,7 +11,7 @@ public class FakeDataStore {
     private final List<Eveniment> evenimentsList = new ArrayList<>();
     private final List<Seat> seatsList = new ArrayList<>();
     private final List<Ticket> ticketsList = new ArrayList<>();
-    private final List<User> users = new ArrayList<>();
+    private final List<UserAccount> users = new ArrayList<>();
 
     public FakeDataStore() {
         //Working on Theater
@@ -29,9 +29,11 @@ public class FakeDataStore {
         ticketsList.add(ticket);
 
         User user = new User("Johnny Test", 18);
-        user.addTicket(ticket);
 
-        users.add(user);
+        UserAccount userAccount = new UserAccount("johny@example.com", "pass", user);
+        userAccount.addTicket(ticket);
+
+        users.add(userAccount);
     }
 
     public Eveniment getEveniment(int id){
@@ -70,12 +72,12 @@ public class FakeDataStore {
         return true;
     }
 
-    public List<User> getUsers() {return this.users;}
+    public List<UserAccount> getUsers() {return this.users;}
 
-    public User getUser(int id){
-        for (User user : users) {
-            if (user.getId() == id)
-                return user;
+    public UserAccount getUserAccount(int id){
+        for (UserAccount userAccount : users) {
+            if (userAccount.getId() == id)
+                return userAccount;
         }
         return null;
     }
