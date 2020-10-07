@@ -17,13 +17,17 @@ public class Eveniment {
     private LocalDate date;
     private String description;
     private List<Seat> seats = new ArrayList<Seat>();
+    private String imgSrc;
+    private Boolean access;
 
-    public Eveniment(String name, String description, List<Seat> seats) {
+    public Eveniment(String name, String description, List<Seat> seats, LocalDate date, String imgSrc) {
         this.id = idSeeder;
         this.name = name;
         this.description = description;
-        this.date = LocalDate.now();
+        this.date = date;
         this.seats = seats;
+        this.imgSrc = imgSrc;
+        this.access = true;
 
         idSeeder++;
     }
@@ -42,6 +46,11 @@ public class Eveniment {
     }
 
     public LocalDate getDate() {return date;}
+
+    public String getImgSrc() {return imgSrc;}
+
+    public Boolean getAccess() {return access;}
+    public void setAccess(Boolean val){ this.access = val; }
 
     public List<Seat> getSeats() { return seats; }
 
@@ -63,6 +72,8 @@ public class Eveniment {
         return "Eveniment{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", date='" + date + '\'' +
+                ", imgSrc='" + imgSrc + '\'' +
                 '}';
     }
 }

@@ -35,7 +35,7 @@ public class EvenimentResources {
         List<Eveniment> eveniments = fakeDataStore.getEveniments();
 
         GenericEntity<List<Eveniment>> entity = new GenericEntity<>(eveniments) {  };
-        return Response.ok(entity).build();
+        return Response.ok(entity).header("Access-Control-Allow-Origin", "*").build();
     }
 
 
@@ -81,7 +81,8 @@ public class EvenimentResources {
         if (seats == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the eveniment.").build();
         } else {
-            return Response.ok(seats).build();
+            //return Response.ok(seats).build();
+            return Response.ok(seats).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 }
