@@ -19,7 +19,10 @@ public class Eveniment {
     private List<Seat> seats = new ArrayList<Seat>();
     private String imgSrc;
     private Boolean access;
+    
+    public Eveniment(){
 
+    }
     public Eveniment(String name, String description, List<Seat> seats, LocalDate date, String imgSrc) {
         this.id = idSeeder;
         this.name = name;
@@ -53,6 +56,7 @@ public class Eveniment {
     public void setAccess(Boolean val){ this.access = val; }
 
     public List<Seat> getSeats() { return seats; }
+    public void setSeats(List<Seat> updatedSeats){this.seats = updatedSeats;}
 
     @Override
     public boolean equals(Object o) {

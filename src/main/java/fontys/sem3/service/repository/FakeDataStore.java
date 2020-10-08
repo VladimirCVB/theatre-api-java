@@ -16,7 +16,7 @@ public class FakeDataStore {
 
     public FakeDataStore() {
         //Working on Theater
-        for(int i = 0; i < 10; i++){
+        for(int i = 1; i <= 10; i++){
             Seat seat = new Seat(i + "A", 12.5);
             Seat seat2 = new Seat(i + "A", 13.5);
             seatsList.add(seat);
@@ -77,7 +77,7 @@ public class FakeDataStore {
         if (old == null) {
             return false;
         }
-        old.setDescription(eveniment.getDescription());
+        old.setSeats(eveniment.getSeats());
         return true;
     }
 

@@ -25,7 +25,7 @@ public class EvenimentResources {
         if (eveniment == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the eveniment.").build();
         } else {
-            return Response.ok(eveniment).build();
+            return Response.ok(eveniment).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
@@ -39,12 +39,12 @@ public class EvenimentResources {
     }
 
 
-    @DELETE //DELETE at http://localhost:XXXX/theater/events/delete/1
-    @Path("/delete/{id}")
+    @DELETE //DELETE at http://localhost:XXXX/theater/events/1
+    @Path("/{id}")
     public Response deleteEveniment(@PathParam("id") int id) {
-        fakeDataStore.deleteEveniment(id);
+         fakeDataStore.deleteEveniment(id);
         // Idempotent method. Always return the same response (even if the resource has already been deleted before).
-        return Response.noContent().build();
+        return Response.noContent().header("Access-Control-Allow-Origin", "*").build();
     }
 
     @POST //POST at http://localhost:XXXX/theater/events
@@ -52,23 +52,23 @@ public class EvenimentResources {
     public Response createEveniment(Eveniment eveniment) {
         if (!fakeDataStore.addEveniment(eveniment)){
             String entity =  "Eveniment with id " + eveniment.getId() + " already exists.";
-            return Response.status(Response.Status.CONFLICT).entity(entity).build();
+            return Response.status(Response.Status.CONFLICT).header("Access-Control-Allow-Origin", "*").entity(entity).build();
         } else {
             String url = uriInfo.getAbsolutePath() + "/" + eveniment.getId(); // url of the created student
             URI uri = URI.create(url);
-            return Response.created(uri).build();
+            return Response.created(uri).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
-    @PUT //PUT at http://localhost:XXXX/theater/events/update/2
+    @PUT //PUT at http://localhost:XXXX/theater/events/2
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/update/{id}")
+    @Path("/{id}")
     public Response updateEveniment(Eveniment eveniment) {
         // Idempotent method. Always update (even if the resource has already been updated before).
         if (fakeDataStore.updateEveniment(eveniment)) {
-            return Response.noContent().build();
+            return Response.noContent().header("Access-Control-Allow-Origin", "*").build();
         } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("Please provide a valid event id.").build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Please provide a valid event id.").header("Access-Control-Allow-Origin", "*").build();
         }
     }
 

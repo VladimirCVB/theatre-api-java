@@ -22,13 +22,28 @@ public class Seat {
         idSeeder++;
     }
 
+    public Seat(String number, double price, int id, boolean available) {
+
+        this.number = number;
+        this.price = price;
+        this.id = id;
+        this.available = available;
+
+    }
+
+    public Seat(){
+
+    }
+
     public int getId() {
         return this.id;
     }
+    public void setId(int id) {this.id = id;}
 
     public String getNumber() {
         return number;
     }
+    public void setNumber(String number){this.number = number;}
 
     public double getPrice() {return price; }
     public void setPrice(double newPrice){
