@@ -35,13 +35,25 @@ public class Eveniment {
         idSeeder++;
     }
 
+    public Eveniment(int id, String name, String description, List<Seat> seats, LocalDate date, String imgSrc) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.date = date;
+        this.seats = seats;
+        this.imgSrc = imgSrc;
+        this.access = true;
+    }
+
     public int getId() {
         return this.id;
     }
+    public void setId(int id){this.id = id;}
 
     public String getName() {
         return name;
     }
+    public void setName(String name){this.name = name;}
 
     public String getDescription() {return description; }
     public void setDescription(String description){
@@ -49,8 +61,10 @@ public class Eveniment {
     }
 
     public LocalDate getDate() {return date;}
+    public void setDate(LocalDate date){this.date = date;}
 
     public String getImgSrc() {return imgSrc;}
+    public void setImgSrc(String imgSrc){this.imgSrc = imgSrc;}
 
     public Boolean getAccess() {return access;}
     public void setAccess(Boolean val){ this.access = val; }
