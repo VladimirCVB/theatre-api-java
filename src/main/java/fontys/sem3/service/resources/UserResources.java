@@ -19,7 +19,7 @@ public class UserResources {
     // this has to be static because the service is stateless:
     private static final FakeDataStore fakeDataStore = new FakeDataStore();
 
-    @GET //GET at http://localhost:XXXX/theater/users
+    /*@GET //GET at http://localhost:XXXX/theater/users
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers() {
         List<UserAccount> users = fakeDataStore.getUsers();
@@ -39,5 +39,5 @@ public class UserResources {
         } else {
             return Response.ok(userAccount).build();
         }
-    }
+    }*/
 }

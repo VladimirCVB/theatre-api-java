@@ -14,28 +14,14 @@ public class Eveniment {
     private int id;
     private static int idSeeder = 0;
     private String name;
-    private LocalDate date;
+    private String date;
     private String description;
     private List<Seat> seats = new ArrayList<Seat>();
     private String imgSrc;
     private Boolean access;
-    
-    public Eveniment(){
 
-    }
-    public Eveniment(String name, String description, List<Seat> seats, LocalDate date, String imgSrc) {
-        this.id = idSeeder;
-        this.name = name;
-        this.description = description;
-        this.date = date;
-        this.seats = seats;
-        this.imgSrc = imgSrc;
-        this.access = true;
 
-        idSeeder++;
-    }
-
-    public Eveniment(int id, String name, String description, List<Seat> seats, LocalDate date, String imgSrc) {
+    public Eveniment(int id, String name, String description, List<Seat> seats, String date, String imgSrc) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -43,6 +29,16 @@ public class Eveniment {
         this.seats = seats;
         this.imgSrc = imgSrc;
         this.access = true;
+    }
+
+    public Eveniment(int id, String name, String description, List<Seat> seats, String date, String imgSrc, boolean access) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.date = date;
+        this.seats = seats;
+        this.imgSrc = imgSrc;
+        this.access = access;
     }
 
     public int getId() {
@@ -60,8 +56,8 @@ public class Eveniment {
         this.description = description;
     }
 
-    public LocalDate getDate() {return date;}
-    public void setDate(LocalDate date){this.date = date;}
+    public String getDate() {return date;}
+    public void setDate(String date){this.date = date;}
 
     public String getImgSrc() {return imgSrc;}
     public void setImgSrc(String imgSrc){this.imgSrc = imgSrc;}

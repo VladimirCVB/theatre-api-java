@@ -10,19 +10,10 @@ public class Seat {
     private int id;
     private static int idSeeder = 0;
     private String number;
-    private boolean available = true;
     private double price;
+    private boolean available = true;
 
-    public Seat(String number, double price) {
-
-        this.id = idSeeder;
-        this.number = number;
-        this.price = price;
-
-        idSeeder++;
-    }
-
-    public Seat(String number, double price, int id, boolean available) {
+    public Seat(int id, double price, String number, boolean available) {
 
         this.number = number;
         this.price = price;

@@ -29,7 +29,7 @@ public class EvenimentResources {
         }
     }
 
-    @GET //GET at http://localhost:XXXX/theater/events
+    /*@GET //GET at http://localhost:XXXX/theater/events
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllEveniments() {
         List<Eveniment> eveniments = fakeDataStore.getEveniments();
@@ -70,7 +70,7 @@ public class EvenimentResources {
         } else {
             return Response.status(Response.Status.NOT_FOUND).entity("Please provide a valid event id.").header("Access-Control-Allow-Origin", "*").build();
         }
-    }
+    }*/
 
     @GET //GET at http://localhost:XXXX/theater/events/2/seats
     @Path("/{id}/seats")

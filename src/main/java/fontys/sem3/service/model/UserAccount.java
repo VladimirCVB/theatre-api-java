@@ -11,7 +11,7 @@ public class UserAccount {
     private static int idSeeder = 0;
     private User user;
     private String email;
-    private String passowrd;
+    private String password;
     private LocalDate accountCreatedAt;
     private UserRole role = UserRole.regular;
     private List<Ticket> tickets;
