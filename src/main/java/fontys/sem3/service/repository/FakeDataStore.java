@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FakeDataStore {
 
-    private final List<Seat> seatsList = new ArrayList<>();
+    private List<Seat> seatsList;
 
     private static Connection connect = null;
     private static Statement statement = null;
@@ -33,18 +33,6 @@ public class FakeDataStore {
 
             while (resultSet.next()){
 
-/*                resultSet = statement.executeQuery("select * from seats where event_id = " + id);
-
-                while (resultSet.next()){
-
-                    int seatId = resultSet.getInt(1);
-                    String number = resultSet.getString(2);
-                    int price = resultSet.getInt(3);
-                    boolean available = resultSet.getBoolean(4);
-
-                    Seat seat = new Seat(seatId, price, number, available);
-                    seatsList.add(seat);
-                }*/
 
                 int eventId = resultSet.getInt(1);
                 String name = resultSet.getString(2);
@@ -53,7 +41,7 @@ public class FakeDataStore {
                 String imgSrc = resultSet.getString(5);
                 boolean access = resultSet.getBoolean(6);
 
-                return event = new Eveniment(eventId, name, description, seatsList, date, imgSrc, access);
+                return event = new Eveniment(eventId, name, description, getSeats(eventId), date, imgSrc, access);
             }
         }
         catch (SQLException e){
@@ -61,6 +49,35 @@ public class FakeDataStore {
             return null;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public List<Seat> getSeats(int eventId){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connect = DriverManager.getConnection(url, user, pass);
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery("select * from seats where event_id = " + eventId);
+
+            while (resultSet.next()) {
+
+                int seatId = resultSet.getInt(1);
+                String number = resultSet.getString(2);
+                int price = resultSet.getInt(3);
+                boolean available = resultSet.getBoolean(4);
+
+                Seat seat = new Seat(seatId, price, number, available);
+                seatsList = new ArrayList<>();
+                seatsList.add(seat);
+
+                return seatsList;
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
 
         return null;
