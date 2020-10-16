@@ -29,7 +29,7 @@ public class EvenimentResources {
         }
     }
 
-    /*@GET //GET at http://localhost:XXXX/theater/events
+    @GET //GET at http://localhost:XXXX/theater/events
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllEveniments() {
         List<Eveniment> eveniments = fakeDataStore.getEveniments();
@@ -38,7 +38,33 @@ public class EvenimentResources {
         return Response.ok(entity).header("Access-Control-Allow-Origin", "*").build();
     }
 
+    @GET //GET at http://localhost:XXXX/theater/events/2/seats
+    @Path("/{id}/seats")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEvenimentSeats(@PathParam("id") int id) {
 
+        List<Seat> seats = fakeDataStore.getSeats(id);
+        if (seats == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the eveniment.").build();
+        } else {
+            //return Response.ok(seats).build();
+            return Response.ok(seats).header("Access-Control-Allow-Origin", "*").build();
+        }
+    }
+
+    @PUT //PUT at http://localhost:XXXX/theater/events/2
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public Response updateEveniment(Eveniment eveniment) {
+        // Idempotent method. Always update (even if the resource has already been updated before).
+        if (fakeDataStore.updateEveniment(eveniment)) {
+            return Response.noContent().header("Access-Control-Allow-Origin", "*").build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).entity("Please provide a valid event id.").header("Access-Control-Allow-Origin", "*").build();
+        }
+    }
+
+    /*
     @DELETE //DELETE at http://localhost:XXXX/theater/events/1
     @Path("/{id}")
     public Response deleteEveniment(@PathParam("id") int id) {
@@ -60,29 +86,6 @@ public class EvenimentResources {
         }
     }
 
-    @PUT //PUT at http://localhost:XXXX/theater/events/2
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{id}")
-    public Response updateEveniment(Eveniment eveniment) {
-        // Idempotent method. Always update (even if the resource has already been updated before).
-        if (fakeDataStore.updateEveniment(eveniment)) {
-            return Response.noContent().header("Access-Control-Allow-Origin", "*").build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("Please provide a valid event id.").header("Access-Control-Allow-Origin", "*").build();
-        }
-    }*/
+    */
 
-    @GET //GET at http://localhost:XXXX/theater/events/2/seats
-    @Path("/{id}/seats")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getEvenimentSeats(@PathParam("id") int id) {
-
-        List<Seat> seats = fakeDataStore.getEveniment(id).getSeats();
-        if (seats == null) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the eveniment.").build();
-        } else {
-            //return Response.ok(seats).build();
-            return Response.ok(seats).header("Access-Control-Allow-Origin", "*").build();
-        }
-    }
 }

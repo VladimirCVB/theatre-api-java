@@ -10,6 +10,7 @@ import java.util.List;
 public class FakeDataStore {
 
     private List<Seat> seatsList;
+    private List<Eveniment> eventsList;
 
     private static Connection connect = null;
     private static Statement statement = null;
@@ -21,13 +22,13 @@ public class FakeDataStore {
 
     }
 
-    public Eveniment getEveniment(int id) {
+    private List<Eveniment> getEventAny(String query){
 
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             connect = DriverManager.getConnection(url, user, pass);
             statement = connect.createStatement();
-            resultSet = statement.executeQuery("select * from events where id = " + id);
+            resultSet = statement.executeQuery(query);
 
             Eveniment event;
 
@@ -41,7 +42,11 @@ public class FakeDataStore {
                 String imgSrc = resultSet.getString(5);
                 boolean access = resultSet.getBoolean(6);
 
-                return event = new Eveniment(eventId, name, description, getSeats(eventId), date, imgSrc, access);
+                event = new Eveniment(eventId, name, description, getSeats(eventId), date, imgSrc, access);
+                eventsList = new ArrayList<>();
+                eventsList.add(event);
+
+                return eventsList;
             }
         }
         catch (SQLException e){
@@ -54,12 +59,31 @@ public class FakeDataStore {
         return null;
     }
 
+    public Eveniment getEveniment(int id) {
+
+        String query = "select * from events where id = " + Integer.toString(id);
+        eventsList = getEventAny(query);
+
+        return eventsList.get(0);
+
+    }
+
+    public List<Eveniment> getEveniments() {
+
+        String query = "select * from events";
+        eventsList = getEventAny(query);
+
+        return eventsList;
+
+    }
+
     public List<Seat> getSeats(int eventId){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             connect = DriverManager.getConnection(url, user, pass);
             statement = connect.createStatement();
             resultSet = statement.executeQuery("select * from seats where event_id = " + eventId);
+            seatsList = new ArrayList<>();
 
             while (resultSet.next()) {
 
@@ -69,10 +93,8 @@ public class FakeDataStore {
                 boolean available = resultSet.getBoolean(4);
 
                 Seat seat = new Seat(seatId, price, number, available);
-                seatsList = new ArrayList<>();
-                seatsList.add(seat);
 
-                return seatsList;
+                seatsList.add(seat);
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -80,11 +102,42 @@ public class FakeDataStore {
             throwables.printStackTrace();
         }
 
-        return null;
+        return seatsList;
     }
 
-    /*public List<Eveniment> getEveniments(){ return evenimentsList; }
+    public boolean updateEveniment(Eveniment eveniment) {
 
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connect = DriverManager.getConnection(url, user, pass);
+            statement = connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            resultSet = statement.executeQuery("select * from seats where event_id = 1");
+
+            while (resultSet.next()) {
+
+                resultSet.updateInt("available", 0);
+                resultSet.updateRow();
+            }
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+
+        /*Eveniment old = this.getEveniment(eveniment.getId());
+        if (old == null) {
+            return false;
+        }
+        old.setSeats(eveniment.getSeats());
+        return true;*/
+    }
+
+    /*
     public boolean addEveniment(Eveniment eveniment){
         if (this.getEveniment(eveniment.getId()) != null){
             return false;

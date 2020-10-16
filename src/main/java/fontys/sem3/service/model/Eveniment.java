@@ -21,14 +21,8 @@ public class Eveniment {
     private Boolean access;
 
 
-    public Eveniment(int id, String name, String description, List<Seat> seats, String date, String imgSrc) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.date = date;
-        this.seats = seats;
-        this.imgSrc = imgSrc;
-        this.access = true;
+    public Eveniment() {
+
     }
 
     public Eveniment(int id, String name, String description, List<Seat> seats, String date, String imgSrc, boolean access) {
