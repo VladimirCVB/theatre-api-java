@@ -12,7 +12,6 @@ import java.util.List;
 public class Eveniment {
 
     private int id;
-    private static int idSeeder = 0;
     private String name;
     private String date;
     private String description;

@@ -15,25 +15,32 @@ public class FakeDataStore {
     private static Connection connect = null;
     private static Statement statement = null;
     private static ResultSet resultSet = null;
+    private static PreparedStatement prepStatement = null;
     private static String url = "jdbc:mysql://localhost:3306/theater-manager";
     private static String user = "root", pass = "";
 
     public FakeDataStore() {
 
-    }
-
-    private List<Eveniment> getEventAny(String query){
-
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             connect = DriverManager.getConnection(url, user, pass);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public List<Eveniment> getEveniments(){
+
+        try{
             statement = connect.createStatement();
-            resultSet = statement.executeQuery(query);
+            resultSet = statement.executeQuery("SELECT * FROM events");
 
             Eveniment event;
+            eventsList = new ArrayList<>();
 
             while (resultSet.next()){
-
 
                 int eventId = resultSet.getInt(1);
                 String name = resultSet.getString(2);
@@ -43,46 +50,59 @@ public class FakeDataStore {
                 boolean access = resultSet.getBoolean(6);
 
                 event = new Eveniment(eventId, name, description, getSeats(eventId), date, imgSrc, access);
-                eventsList = new ArrayList<>();
+
                 eventsList.add(event);
 
-                return eventsList;
             }
         }
         catch (SQLException e){
             e.printStackTrace();
             return null;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
 
-        return null;
+        return eventsList;
     }
 
     public Eveniment getEveniment(int id) {
 
-        String query = "select * from events where id = " + Integer.toString(id);
-        eventsList = getEventAny(query);
+        try{
+            prepStatement = connect.prepareStatement("SELECT * FROM events WHERE id = ?");
+            prepStatement.setInt(1, id);
+            resultSet = prepStatement.executeQuery();
+
+            Eveniment event;
+            eventsList = new ArrayList<>();
+
+            while (resultSet.next()){
+
+                int eventId = resultSet.getInt(1);
+                String name = resultSet.getString(2);
+                String date = resultSet.getString(3);
+                String description = resultSet.getString(4);
+                String imgSrc = resultSet.getString(5);
+                boolean access = resultSet.getBoolean(6);
+
+                event = new Eveniment(eventId, name, description, getSeats(eventId), date, imgSrc, access);
+
+                eventsList.add(event);
+
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
 
         return eventsList.get(0);
 
     }
 
-    public List<Eveniment> getEveniments() {
-
-        String query = "select * from events";
-        eventsList = getEventAny(query);
-
-        return eventsList;
-
-    }
-
     public List<Seat> getSeats(int eventId){
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connect = DriverManager.getConnection(url, user, pass);
-            statement = connect.createStatement();
-            resultSet = statement.executeQuery("select * from seats where event_id = " + eventId);
+            prepStatement = connect.prepareStatement("SELECT * FROM seats WHERE event_id = ?");
+            prepStatement.setInt(1, eventId);
+
+            resultSet = prepStatement.executeQuery();
             seatsList = new ArrayList<>();
 
             while (resultSet.next()) {
@@ -96,73 +116,109 @@ public class FakeDataStore {
 
                 seatsList.add(seat);
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException throwables) {
+        }  catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
         return seatsList;
     }
 
-    public boolean updateEveniment(Eveniment eveniment) {
+    public boolean updateEveniment(int eventId) {
 
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connect = DriverManager.getConnection(url, user, pass);
-            statement = connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            resultSet = statement.executeQuery("select * from seats where event_id = 1");
-
-            while (resultSet.next()) {
-
-                resultSet.updateInt("available", 0);
-                resultSet.updateRow();
-            }
-
+            prepStatement = connect.prepareStatement("UPDATE seats SET available = 0 WHERE event_id = ?");
+            prepStatement.setInt(1, eventId);
+            prepStatement.executeUpdate();
         }
         catch (SQLException e){
             e.printStackTrace();
             return false;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
 
         return true;
-
-        /*Eveniment old = this.getEveniment(eveniment.getId());
-        if (old == null) {
-            return false;
-        }
-        old.setSeats(eveniment.getSeats());
-        return true;*/
     }
 
-    /*
-    public boolean addEveniment(Eveniment eveniment){
-        if (this.getEveniment(eveniment.getId()) != null){
+    public boolean addEveniment(Eveniment event){
+        try{
+            String sql = "INSERT INTO events ( name, date, description, imgSrc, access ) VALUES (?, ?, ?, ?, ?)";
+            prepStatement = connect.prepareStatement(sql);
+            prepStatement.setString(1, event.getName());
+            prepStatement.setString(2, event.getDate());
+            prepStatement.setString(3, event.getDescription());
+            prepStatement.setString(4, event.getImgSrc());
+            prepStatement.setBoolean(5, event.getAccess());
+
+            prepStatement.executeUpdate();
+
+            addEventEarnings(event.getDate(), event.getName());
+
+            return true;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return false;
+    }
+
+    private int getLastEventId(){
+        try{
+            prepStatement = connect.prepareStatement("SELECT MAX(id) FROM events");
+            resultSet = prepStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    private boolean addEventEarnings(String event_date, String event_name){
+
+        if(getLastEventId() == -1){
             return false;
         }
-        evenimentsList.add(eveniment);
-        return true;
+
+        int event_id = getLastEventId();
+
+        try{
+            String sql = "INSERT INTO events_earnings ( sold_seats, earnings, event_id, event_date, event_name ) VALUES (0, 0, ?, ?, ?)";
+            prepStatement = connect.prepareStatement(sql);
+            prepStatement.setInt(1, event_id);
+            prepStatement.setString(2, event_date);
+            prepStatement.setString(3, event_name);
+
+            prepStatement.executeUpdate();
+            return true;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return false;
     }
 
     public boolean deleteEveniment(int id) {
-        Eveniment eveniment = getEveniment(id);
-        if (eveniment == null){
-            return false;
+        try{
+            String sql = "DELETE FROM events WHERE id = ?";
+            prepStatement = connect.prepareStatement(sql);
+            prepStatement.setInt(1, id);
+
+            prepStatement.executeUpdate();
+
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
 
-        return evenimentsList.remove(eveniment);
+        return false;
     }
 
-    public boolean updateEveniment(Eveniment eveniment) {
-        Eveniment old = this.getEveniment(eveniment.getId());
-        if (old == null) {
-            return false;
-        }
-        old.setSeats(eveniment.getSeats());
-        return true;
-    }
+/*
 
     public List<UserAccount> getUsers() {return this.users;}
 

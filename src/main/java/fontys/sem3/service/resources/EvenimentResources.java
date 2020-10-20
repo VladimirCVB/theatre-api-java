@@ -8,6 +8,7 @@ import fontys.sem3.service.repository.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
+import java.sql.SQLException;
 import java.util.List;
 
 @Path("/events")
@@ -20,7 +21,7 @@ public class EvenimentResources {
     @GET //GET at http://localhost:XXXX/theater/events/1
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEvenimentPath(@PathParam("id") int id) {
+    public Response getEvenimentPath(@PathParam("id") int id) throws SQLException {
         Eveniment eveniment = fakeDataStore.getEveniment(id);
         if (eveniment == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the eveniment.").build();
@@ -55,16 +56,15 @@ public class EvenimentResources {
     @PUT //PUT at http://localhost:XXXX/theater/events/2
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}")
-    public Response updateEveniment(Eveniment eveniment) {
+    public Response updateEveniment(@PathParam("id") int id) {
         // Idempotent method. Always update (even if the resource has already been updated before).
-        if (fakeDataStore.updateEveniment(eveniment)) {
+        if (fakeDataStore.updateEveniment(id)) {
             return Response.noContent().header("Access-Control-Allow-Origin", "*").build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).entity("Please provide a valid event id.").header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
-    /*
     @DELETE //DELETE at http://localhost:XXXX/theater/events/1
     @Path("/{id}")
     public Response deleteEveniment(@PathParam("id") int id) {
@@ -86,6 +86,5 @@ public class EvenimentResources {
         }
     }
 
-    */
 
 }
