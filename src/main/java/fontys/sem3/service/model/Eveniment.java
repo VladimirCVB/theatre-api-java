@@ -18,6 +18,7 @@ public class Eveniment {
     private List<Seat> seats = new ArrayList<Seat>();
     private String imgSrc;
     private Boolean access;
+    private int seatPrice;
 
 
     public Eveniment() {
@@ -30,6 +31,15 @@ public class Eveniment {
         this.description = description;
         this.date = date;
         this.seats = seats;
+        this.imgSrc = imgSrc;
+        this.access = access;
+    }
+
+    public Eveniment(int id, String name, String description, String date, String imgSrc, boolean access) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.date = date;
         this.imgSrc = imgSrc;
         this.access = access;
     }
@@ -56,10 +66,26 @@ public class Eveniment {
     public void setImgSrc(String imgSrc){this.imgSrc = imgSrc;}
 
     public Boolean getAccess() {return access;}
-    public void setAccess(Boolean val){ this.access = val; }
+    public void setAccess(Boolean access){ this.access = access; }
+
+    public void setSeatPrice(int price){this.seatPrice = price;}
 
     public List<Seat> getSeats() { return seats; }
-    public void setSeats(List<Seat> updatedSeats){this.seats = updatedSeats;}
+    public void setSeats(int numberOfSeats){
+
+        String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+        int rows = Math.floorDiv(numberOfSeats, 10);
+
+        for(int i = 1; i <= rows; i++){
+            for(int y = 0; y < letters.length; y++){
+                String number = String.valueOf(i) + letters[y];
+                Seat seat = new Seat(seatPrice, number);
+
+                seats.add(seat);
+            }
+        }
+    }
+    public void setSeatsList(List<Seat> seats){this.seats = seats;}
 
     @Override
     public boolean equals(Object o) {

@@ -32,10 +32,9 @@ public class JDBCEventsRepository extends JDBCRepository{
             statement = connect.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM events");
 
-            Eveniment event;
             eventsList = new ArrayList<>();
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
 
                 int eventId = resultSet.getInt(1);
                 String name = resultSet.getString(2);
@@ -44,15 +43,18 @@ public class JDBCEventsRepository extends JDBCRepository{
                 String imgSrc = resultSet.getString(5);
                 boolean access = resultSet.getBoolean(6);
 
-                event = new Eveniment(eventId, name, description, getSeats(eventId), date, imgSrc, access);
+                Eveniment event;
+                event = new Eveniment(eventId, name, description, date, imgSrc, access);
 
                 eventsList.add(event);
-
             }
         }
         catch (SQLException e){
             e.printStackTrace();
-            return null;
+        }
+
+        for(Eveniment event : eventsList){
+            event.setSeatsList(getSeats(event.getId()));
         }
 
         return eventsList;
@@ -65,7 +67,6 @@ public class JDBCEventsRepository extends JDBCRepository{
             prepStatement.setInt(1, id);
             resultSet = prepStatement.executeQuery();
 
-            Eveniment event;
             eventsList = new ArrayList<>();
 
             while (resultSet.next()){
@@ -77,10 +78,9 @@ public class JDBCEventsRepository extends JDBCRepository{
                 String imgSrc = resultSet.getString(5);
                 boolean access = resultSet.getBoolean(6);
 
-                event = new Eveniment(eventId, name, description, getSeats(eventId), date, imgSrc, access);
+                Eveniment event;
 
-                eventsList.add(event);
-
+                return event = new Eveniment(eventId, name, description, getSeats(eventId), date, imgSrc, access);
             }
         }
         catch (SQLException e){
@@ -88,8 +88,7 @@ public class JDBCEventsRepository extends JDBCRepository{
             return null;
         }
 
-        return eventsList.get(0);
-
+        return null;
     }
 
     public List<Seat> getSeats(int eventId){
@@ -146,6 +145,7 @@ public class JDBCEventsRepository extends JDBCRepository{
             prepStatement.executeUpdate();
 
             addEventEarnings(event.getDate(), event.getName());
+            addSeats(event.getSeats());
 
             return true;
 
@@ -170,6 +170,35 @@ public class JDBCEventsRepository extends JDBCRepository{
         }
 
         return -1;
+    }
+
+    private boolean addSeats(List<Seat> seats){
+
+        if(getLastEventId() == -1){
+            return false;
+        }
+
+        int event_id = getLastEventId();
+
+        for (Seat seat : seats)
+        {
+            try{
+                String sql = "INSERT INTO seats ( number, price, available, event_id ) VALUES (?, ?, ?, ?)";
+                prepStatement = connect.prepareStatement(sql);
+
+                prepStatement.setString(1, seat.getNumber());
+                prepStatement.setDouble(2, seat.getPrice());
+                prepStatement.setBoolean(3, seat.getAvailable());
+                prepStatement.setInt(4, event_id);
+
+                prepStatement.executeUpdate();
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+
+        return false;
     }
 
     private boolean addEventEarnings(String event_date, String event_name){

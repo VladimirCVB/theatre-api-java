@@ -22,6 +22,13 @@ public class Seat {
 
     }
 
+    public Seat(double price, String number) {
+
+        this.number = number;
+        this.price = price;
+
+    }
+
     public Seat(){
 
     }
