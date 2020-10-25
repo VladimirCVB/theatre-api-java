@@ -16,13 +16,13 @@ public class EvenimentResources {
     @Context
     private UriInfo uriInfo;
     // this has to be static because the service is stateless:
-    private static final FakeDataStore fakeDataStore = new FakeDataStore();
+    private static final JDBCEventsRepository JDBC_EVENTS_REPOSITORY = new JDBCEventsRepository();
 
     @GET //GET at http://localhost:XXXX/theater/events/1
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEvenimentPath(@PathParam("id") int id) throws SQLException {
-        Eveniment eveniment = fakeDataStore.getEveniment(id);
+        Eveniment eveniment = JDBC_EVENTS_REPOSITORY.getEveniment(id);
         if (eveniment == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the eveniment.").build();
         } else {
@@ -33,7 +33,7 @@ public class EvenimentResources {
     @GET //GET at http://localhost:XXXX/theater/events
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllEveniments() {
-        List<Eveniment> eveniments = fakeDataStore.getEveniments();
+        List<Eveniment> eveniments = JDBC_EVENTS_REPOSITORY.getEveniments();
 
         GenericEntity<List<Eveniment>> entity = new GenericEntity<>(eveniments) {  };
         return Response.ok(entity).header("Access-Control-Allow-Origin", "*").build();
@@ -44,7 +44,7 @@ public class EvenimentResources {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEvenimentSeats(@PathParam("id") int id) {
 
-        List<Seat> seats = fakeDataStore.getSeats(id);
+        List<Seat> seats = JDBC_EVENTS_REPOSITORY.getSeats(id);
         if (seats == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the eveniment.").build();
         } else {
@@ -58,7 +58,7 @@ public class EvenimentResources {
     @Path("/{id}")
     public Response updateEveniment(@PathParam("id") int id) {
         // Idempotent method. Always update (even if the resource has already been updated before).
-        if (fakeDataStore.updateEveniment(id)) {
+        if (JDBC_EVENTS_REPOSITORY.updateEveniment(id)) {
             return Response.noContent().header("Access-Control-Allow-Origin", "*").build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).entity("Please provide a valid event id.").header("Access-Control-Allow-Origin", "*").build();
@@ -68,7 +68,7 @@ public class EvenimentResources {
     @DELETE //DELETE at http://localhost:XXXX/theater/events/1
     @Path("/{id}")
     public Response deleteEveniment(@PathParam("id") int id) {
-         fakeDataStore.deleteEveniment(id);
+         JDBC_EVENTS_REPOSITORY.deleteEveniment(id);
         // Idempotent method. Always return the same response (even if the resource has already been deleted before).
         return Response.noContent().header("Access-Control-Allow-Origin", "*").build();
     }
@@ -76,7 +76,7 @@ public class EvenimentResources {
     @POST //POST at http://localhost:XXXX/theater/events
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createEveniment(Eveniment eveniment) {
-        if (!fakeDataStore.addEveniment(eveniment)){
+        if (!JDBC_EVENTS_REPOSITORY.addEveniment(eveniment)){
             String entity =  "Eveniment with id " + eveniment.getId() + " already exists.";
             return Response.status(Response.Status.CONFLICT).header("Access-Control-Allow-Origin", "*").entity(entity).build();
         } else {

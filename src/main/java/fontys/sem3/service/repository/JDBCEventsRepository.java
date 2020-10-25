@@ -7,29 +7,24 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FakeDataStore {
+public class JDBCEventsRepository extends JDBCRepository{
 
     private List<Seat> seatsList;
     private List<Eveniment> eventsList;
 
-    private static Connection connect = null;
+    private Connection connect;
+
+    {
+        try {
+            connect = this.getConnection();
+        } catch (TheaterDatabaseException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static Statement statement = null;
     private static ResultSet resultSet = null;
     private static PreparedStatement prepStatement = null;
-    private static String url = "jdbc:mysql://localhost:3306/theater-manager";
-    private static String user = "root", pass = "";
-
-    public FakeDataStore() {
-
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connect = DriverManager.getConnection(url, user, pass);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
 
     public List<Eveniment> getEveniments(){
 
