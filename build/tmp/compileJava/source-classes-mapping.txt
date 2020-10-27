@@ -12,18 +12,18 @@ fontys/sem3/service/repository/JDBCRepository.java
  fontys.sem3.service.repository.JDBCRepository
 fontys/sem3/service/model/User.java
  fontys.sem3.service.model.User
-fontys/sem3/service/resources/UserResources.java
- fontys.sem3.service.resources.UserResources
+fontys/sem3/service/model/Ticket.java
+ fontys.sem3.service.model.Ticket
 fontys/sem3/service/model/Seat.java
  fontys.sem3.service.model.Seat
 fontys/sem3/service/model/Eveniment.java
  fontys.sem3.service.model.Eveniment
+fontys/sem3/service/model/UserAccount.java
+ fontys.sem3.service.model.UserAccount
 fontys/sem3/service/resources/EvenimentResources.java
  fontys.sem3.service.resources.EvenimentResources
  fontys.sem3.service.resources.EvenimentResources$1
-fontys/sem3/service/model/UserAccount.java
- fontys.sem3.service.model.UserAccount
-fontys/sem3/service/model/Ticket.java
- fontys.sem3.service.model.Ticket
+fontys/sem3/service/resources/UserResources.java
+ fontys.sem3.service.resources.UserResources
 fontys/sem3/service/repository/JDBCEventsRepository.java
  fontys.sem3.service.repository.JDBCEventsRepository

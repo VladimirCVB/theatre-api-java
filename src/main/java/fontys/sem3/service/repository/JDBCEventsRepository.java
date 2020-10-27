@@ -157,19 +157,27 @@ public class JDBCEventsRepository extends JDBCRepository{
     }
 
     private int getLastEventId(){
+
+        int eventId = 1;
+
         try{
             prepStatement = connect.prepareStatement("SELECT MAX(id) FROM events");
             resultSet = prepStatement.executeQuery();
 
             while (resultSet.next()) {
 
-                return resultSet.getInt(1);
+                eventId = resultSet.getInt(1);
+
+                if(eventId == -1){
+                    return 1;
+                }
+
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        return -1;
+        return eventId;
     }
 
     private boolean addSeats(List<Seat> seats){
