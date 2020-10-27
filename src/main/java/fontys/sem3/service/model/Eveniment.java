@@ -18,7 +18,7 @@ public class Eveniment {
     private List<Seat> seats = new ArrayList<Seat>();
     private String imgSrc;
     private Boolean access;
-    private int seatPrice;
+    private double seatPrice;
 
 
     public Eveniment() {
@@ -68,7 +68,8 @@ public class Eveniment {
     public Boolean getAccess() {return access;}
     public void setAccess(Boolean access){ this.access = access; }
 
-    public void setSeatPrice(int price){this.seatPrice = price;}
+    public double getSeatPrice(){return seatPrice;}
+    public void setSeatPrice(double price){this.seatPrice = price;}
 
     public List<Seat> getSeats() { return seats; }
     public void setSeats(int numberOfSeats){

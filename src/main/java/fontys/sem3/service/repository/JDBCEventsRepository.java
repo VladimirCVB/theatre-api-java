@@ -174,6 +174,8 @@ public class JDBCEventsRepository extends JDBCRepository{
 
     private boolean addSeats(List<Seat> seats){
 
+        //resolve pricing problem
+
         if(getLastEventId() == -1){
             return false;
         }
