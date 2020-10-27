@@ -8,7 +8,6 @@ import java.util.Objects;
 public class Seat {
 
     private int id;
-    private static int idSeeder = 0;
     private String number;
     private double price;
     private boolean available = true;
