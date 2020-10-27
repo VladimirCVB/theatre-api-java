@@ -227,12 +227,21 @@ public class JDBCEventsRepository extends JDBCRepository{
     }
 
     public boolean deleteEveniment(int id) {
+        String seatQuery = "DELETE FROM seats WHERE event_id = ?";
+        deleteStatement(seatQuery, id);
+
+        String eventsQuery = "DELETE FROM events WHERE id = ?";
+        return deleteStatement(eventsQuery, id);
+    }
+
+    public boolean deleteStatement(String query, int id) {
         try{
-            String sql = "DELETE FROM events WHERE id = ?";
+            String sql = query;
             prepStatement = connect.prepareStatement(sql);
             prepStatement.setInt(1, id);
 
             prepStatement.executeUpdate();
+            //delete seats
 
             return true;
         } catch (SQLException throwables) {
