@@ -13,3 +13,8 @@ test:
  
 after_script:
   - echo "End CI"
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  SONAR_TOKEN: ""
+  SONAR_HOST_URL: "http://localhost:9000"
