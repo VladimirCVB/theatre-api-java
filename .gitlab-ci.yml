@@ -1,6 +1,11 @@
 before_script:
 - set GRADLE_USER_HOME=$(pwd)/.gradle
 - attrib +x ./gradlew
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  SONAR_TOKEN: ""
+  SONAR_HOST_URL: "http://localhost:9000"
  
 build:
   script:
