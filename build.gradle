@@ -21,6 +21,7 @@ dependencies {
     implementation group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: '2.+'
 
     compile 'mysql:mysql-connector-java:6.0.+'
+    compile 'org.hibernate:hibernate-core:5.4.23.Final'
 
     // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.+'
