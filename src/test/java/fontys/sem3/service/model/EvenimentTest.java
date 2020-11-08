@@ -67,7 +67,7 @@ class EvenimentTest {
     }
 
     @Test
-    void TestGetDescription() {
+    void TestGetSetDescription() {
 
         // Arrange - Setup the code to be used
         Eveniment event = testData();
@@ -80,7 +80,7 @@ class EvenimentTest {
     }
 
     @Test
-    void TestGetDate() {
+    void TestGetSetDate() {
 
         // Arrange - Setup the code to be used
         Eveniment event = testData();
@@ -93,7 +93,7 @@ class EvenimentTest {
     }
 
     @Test
-    void TestGetImgSrc() {
+    void TestGetSetImgSrc() {
 
         // Arrange - Setup the code to be used
         Eveniment event = testData();
@@ -106,7 +106,7 @@ class EvenimentTest {
     }
 
     @Test
-    void TestGetAccess() {
+    void TestGetSetAccess() {
 
         // Arrange - Setup the code to be used
         Eveniment event = testData();
@@ -119,7 +119,7 @@ class EvenimentTest {
     }
 
     @Test
-    void TestGetPrice() {
+    void TestGetSetPrice() {
 
         // Arrange - Setup the code to be used
         Eveniment event = testData();
@@ -132,7 +132,7 @@ class EvenimentTest {
     }
 
     @Test
-    void TestGetSeats() {
+    void TestGetSetSeats() {
 
         // Arrange - Setup the code to be used
         Eveniment event = testData();

@@ -10,46 +10,46 @@ import java.util.Objects;
 public class Ticket {
 
     private int id;
-    private static int idSeeder = 0;
     private Eveniment eveniment;
-    private LocalDate dateOfPurchase;
+    private String dateOfPurchase;
     private double price;
     private List<Seat> seats = new ArrayList<Seat>();;
 
-    public Ticket(Eveniment eveniment, LocalDate dateOfPurchase, List<Seat> seats) {
+    public Ticket(Eveniment eveniment, String dateOfPurchase, List<Seat> seats) {
 
-        this.id = idSeeder;
         this.eveniment = eveniment;
         this.dateOfPurchase = dateOfPurchase;
-        this.price = calculatePrice();
         this.seats = seats;
-
-        idSeeder++;
     }
 
-    private double calculatePrice(){
+    public Ticket(){}
+
+    public int getId() {
+        return this.id;
+    }
+    public void setId(int id){ this.id = id; }
+
+    public Eveniment getEveniment() {
+        return this.eveniment;
+    }
+    public void setEveniment(Eveniment event){ this.eveniment = event; }
+
+    public double getPrice() {
         int totalPrice = 0;
 
         for(int i = 0; i < seats.size(); i++){
             totalPrice += seats.get(i).getPrice();
         }
 
-        return totalPrice;
-    }
+        price = totalPrice;
 
-    public int getId() {
-        return this.id;
+        return price;
     }
-
-    public Eveniment getEveniment() {
-        return this.eveniment;
-    }
-
-    public double getPrice() { return price; }
 
     public List<Seat> getSeats(){
         return this.seats;
     }
+    public void setSeats(List<Seat> seats){ this.seats = seats; }
 
     @Override
     public boolean equals(Object o) {

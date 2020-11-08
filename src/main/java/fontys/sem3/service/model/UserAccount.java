@@ -8,26 +8,31 @@ import java.util.Objects;
 public class UserAccount {
 
     private int id;
-    private static int idSeeder = 0;
     private User user;
     private String email;
     private String password;
-    private LocalDate accountCreatedAt;
     private UserRole role = UserRole.regular;
     private List<Ticket> tickets;
 
-    public UserAccount(String email, String password, User user){
+    public UserAccount(int id, String email, String password, User user){
 
-        this.id = idSeeder;
-        this.accountCreatedAt = LocalDate.now();
         tickets = new ArrayList<>();
         this.user = user;
-        idSeeder++;
+
     }
+
+    public UserAccount(){}
 
     public int getId() {
         return this.id;
     }
+    public void setId(int id){ this.id = id; }
+
+    public String getEmail() { return this.email; }
+    public void setEmail(String email){ this.email = email; }
+
+    public String getPassword() { return this.password; }
+    public void setPassword(String password){ this.password = password; }
 
     public UserRole getRole() {return this.role;}
     public void setRole(UserRole role){
@@ -35,7 +40,7 @@ public class UserAccount {
     }
 
     public List<Ticket> getTickets() { return tickets; }
-    public void addTicket(Ticket ticket){
+    public void setTicket(Ticket ticket){
         this.tickets.add(ticket);
     }
 

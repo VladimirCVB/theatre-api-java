@@ -14,14 +14,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class EvenimentResourcesTest {
 
     @Test
-    void TestCreateEveniment() {
+    void TestCreateEveniment() throws SQLException {
 
         // Arrange - Setup the code to be used
         EvenimentResources eventRes = new EvenimentResources();
 
         int id = 1;
         String name = "Test Event";
-        String date = "12.10.2022";
+        String date = "12.10.2020";
         String description = "test description";
         String imgSrc = "none";
 
@@ -76,5 +76,14 @@ public class EvenimentResourcesTest {
 
     @Test
     void TestDeleteEveniment() {
+
+        // Arrange - Setup the code to be used
+        EvenimentResources eventRes = new EvenimentResources();
+
+        // Act - Execute the method to be tested
+        Response event = eventRes.deleteEveniment(1);
+
+        // Assert - Check if the method postconditions is as expected
+        assertEquals(204, event.getStatus());
     }
 }
