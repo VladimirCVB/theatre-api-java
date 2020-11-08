@@ -1,0 +1,80 @@
+package fontys.sem3.service.resources;
+
+import fontys.sem3.service.model.Eveniment;
+import fontys.sem3.service.model.Seat;
+import org.junit.jupiter.api.Test;
+
+import javax.ws.rs.core.Response;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class EvenimentResourcesTest {
+
+    @Test
+    void TestCreateEveniment() {
+
+        // Arrange - Setup the code to be used
+        EvenimentResources eventRes = new EvenimentResources();
+
+        int id = 1;
+        String name = "Test Event";
+        String date = "12.10.2022";
+        String description = "test description";
+        String imgSrc = "none";
+
+        Eveniment event = new Eveniment(id, name, description, date, imgSrc, true);
+        event.setSeats(10);
+
+        // Act - Execute the method to be tested
+        Response response = eventRes.createEveniment(event);
+
+        // Assert - Check if the method postconditions is as expected
+        assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    void TestGetEvenimentPath() throws SQLException {
+
+        // Arrange - Setup the code to be used
+        EvenimentResources eventRes = new EvenimentResources();
+
+        // Act - Execute the method to be tested
+        Response event = eventRes.getEvenimentPath(1);
+
+        // Assert - Check if the method postconditions is as expected
+        assertEquals(200, event.getStatus());
+    }
+
+    @Test
+    void TestGetAllEveniments() {
+
+        // Arrange - Setup the code to be used
+        EvenimentResources eventRes = new EvenimentResources();
+
+        // Act - Execute the method to be tested
+        Response event = eventRes.getAllEveniments();
+
+        // Assert - Check if the method postconditions is as expected
+        assertEquals(200, event.getStatus());
+    }
+
+    @Test
+    void TestUpdateEveniment() {
+
+        // Arrange - Setup the code to be used
+        EvenimentResources eventRes = new EvenimentResources();
+
+        // Act - Execute the method to be tested
+        Response event = eventRes.updateEveniment(1);
+
+        // Assert - Check if the method postconditions is as expected
+        assertEquals(204, event.getStatus());
+    }
+
+    @Test
+    void TestDeleteEveniment() {
+    }
+}
