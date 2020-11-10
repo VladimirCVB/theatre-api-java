@@ -244,7 +244,7 @@ public class JDBCEventsRepository extends JDBCRepository{
         return deleteStatement(eventsQuery, id);
     }
 
-    public boolean deleteStatement(String query, int id) {
+    private boolean deleteStatement(String query, int id) {
         try{
             String sql = query;
             prepStatement = connect.prepareStatement(sql);

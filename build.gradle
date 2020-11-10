@@ -13,12 +13,19 @@ application{
     mainClassName 'fontys.sem3.service.Publisher'
 }
 
+test {
+    useJUnitPlatform()
+}
+
+
 dependencies {
      /*  Jersey for the service
         We use the latest 2.x release because 2.x releases implement JAX-RS 2.1 API.
         We do NOT use a Jersey 3.x release because 3.x releases implement Jakarta RESTful WebServices 3.0 API.*/
     implementation group: 'org.glassfish.jersey.bundles', name: 'jaxrs-ri', version: '2.+'
     implementation group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: '2.+'
+    implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
+    implementation 'org.testng:testng:6.14.3'
 
     compile 'mysql:mysql-connector-java:6.0.+'
 
@@ -26,6 +33,9 @@ dependencies {
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.+'
     // https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime
     implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.+'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
 
 
 
