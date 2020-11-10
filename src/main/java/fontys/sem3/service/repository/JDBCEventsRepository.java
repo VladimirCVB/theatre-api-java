@@ -2,6 +2,7 @@ package fontys.sem3.service.repository;
 
 import fontys.sem3.service.model.*;
 
+import javax.ws.rs.core.GenericEntity;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -119,16 +120,15 @@ public class JDBCEventsRepository extends JDBCRepository{
 
     public boolean updateEveniment(int eventId) {
 
-        try{
-            prepStatement = connect.prepareStatement("UPDATE seats SET available = 0 WHERE event_id = ?");
-            prepStatement.setInt(1, eventId);
-            prepStatement.executeUpdate();
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-            return false;
-        }
-
+            try{
+                prepStatement = connect.prepareStatement("UPDATE seats SET available = 0 WHERE event_id = ?");
+                prepStatement.setInt(1, eventId);
+                prepStatement.executeUpdate();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+                return false;
+            }
         return true;
     }
 
@@ -157,22 +157,32 @@ public class JDBCEventsRepository extends JDBCRepository{
     }
 
     private int getLastEventId(){
+
+        int eventId = 1;
+
         try{
             prepStatement = connect.prepareStatement("SELECT MAX(id) FROM events");
             resultSet = prepStatement.executeQuery();
 
             while (resultSet.next()) {
 
-                return resultSet.getInt(1);
+                eventId = resultSet.getInt(1);
+
+                if(eventId == -1){
+                    return 1;
+                }
+
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        return -1;
+        return eventId;
     }
 
     private boolean addSeats(List<Seat> seats){
+
+        //resolve pricing problem
 
         if(getLastEventId() == -1){
             return false;

@@ -9,10 +9,10 @@ public class Seat {
 
     private int id;
     private String number;
-    private double price;
+    private int price;
     private boolean available = true;
 
-    public Seat(int id, double price, String number, boolean available) {
+    public Seat(int id, int price, String number, boolean available) {
 
         this.number = number;
         this.price = price;
@@ -21,7 +21,7 @@ public class Seat {
 
     }
 
-    public Seat(double price, String number) {
+    public Seat(int price, String number) {
 
         this.number = number;
         this.price = price;
@@ -43,7 +43,7 @@ public class Seat {
     public void setNumber(String number){this.number = number;}
 
     public double getPrice() {return price; }
-    public void setPrice(double newPrice){
+    public void setPrice(int newPrice){
         this.price = newPrice;
     }
 

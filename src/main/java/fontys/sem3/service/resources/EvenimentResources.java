@@ -5,6 +5,8 @@ import fontys.sem3.service.model.Eveniment;
 import fontys.sem3.service.model.Seat;
 import fontys.sem3.service.repository.*;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
@@ -20,6 +22,7 @@ public class EvenimentResources {
 
     @GET //GET at http://localhost:XXXX/theater/events/1
     @Path("/{id}")
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEvenimentPath(@PathParam("id") int id) throws SQLException {
         Eveniment eveniment = JDBC_EVENTS_REPOSITORY.getEveniment(id);
@@ -41,6 +44,7 @@ public class EvenimentResources {
 
     @GET //GET at http://localhost:XXXX/theater/events/2/seats
     @Path("/{id}/seats")
+    @RolesAllowed({"Regular"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEvenimentSeats(@PathParam("id") int id) {
 
