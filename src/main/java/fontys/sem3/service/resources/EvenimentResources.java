@@ -4,10 +4,15 @@ package fontys.sem3.service.resources;
 import fontys.sem3.service.model.Eveniment;
 import fontys.sem3.service.model.Seat;
 import fontys.sem3.service.repository.*;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.*;
 import java.net.URI;
 import java.sql.SQLException;

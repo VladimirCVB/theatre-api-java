@@ -18,8 +18,9 @@ public class UserAccount {
 
     public UserAccount(String email, String password, User user){
 
-        this.id = idSeeder;
-        this.accountCreatedAt = LocalDate.now();
+        this.id = id;
+        this.email = email;
+        this.password = password;
         tickets = new ArrayList<>();
         this.user = user;
         idSeeder++;
