@@ -18,13 +18,11 @@ public class Ticket {
 
     public Ticket(Eveniment eveniment, LocalDate dateOfPurchase, List<Seat> seats) {
 
-        this.id = idSeeder;
         this.eveniment = eveniment;
         this.dateOfPurchase = dateOfPurchase;
         this.price = calculatePrice();
         this.seats = seats;
 
-        idSeeder++;
     }
 
     private double calculatePrice(){
