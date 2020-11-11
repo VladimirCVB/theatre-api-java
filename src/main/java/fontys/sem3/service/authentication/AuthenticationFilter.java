@@ -1,5 +1,7 @@
 package fontys.sem3.service.authentication;
 
+import fontys.sem3.service.repository.JDBCUsers;
+
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -48,7 +50,6 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
         //If no authorization information present; return null
         if (authorization == null || authorization.isEmpty()) {
-
             Response response = Response.status(Response.Status.UNAUTHORIZED). entity("Missing username and/or password.").build();
             requestContext.abortWith(response);
             return;
@@ -62,12 +63,16 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
         //Split username and password tokens in credentials
         final StringTokenizer tokenizer = new StringTokenizer(credentials, ":");
-        final String username = tokenizer.nextToken();
+        final String email = tokenizer.nextToken();
         final String password = tokenizer.nextToken();
 
         //if (!isValidUser(username, password))
-        if (true) {
-            Response response = Response.status(Response.Status.UNAUTHORIZED). entity("Invalid username and/or password.").build();
+
+        JDBCUsers user = new JDBCUsers();
+        boolean status = user.getUser(email, password);
+
+        if (!status) {
+            Response response = Response.status(Response.Status.UNAUTHORIZED).entity("Invalid username and/or password.").build();
             requestContext.abortWith(response);
             return;
         }
@@ -99,11 +104,20 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             if not isUserAllowed abort the requestContext with FORBIDDEN response*/
 
             //if (!isUserAllowed(username, password, rolesSet))
-            if (true) {
+            String userRole = user.getUserRole(email, password);
+            for(String role : rolesSet){
+                if (!role.equals(userRole)) {
+                    Response response = Response.status(Response.Status.FORBIDDEN).build();
+                    requestContext.abortWith(response);
+                }
+                return;
+            }
+
+            /*if (true == false) {
                 Response response = Response.status(Response.Status.FORBIDDEN).build();
                 requestContext.abortWith(response);
                 return;
-            }
+            }*/
         }
     }
 }

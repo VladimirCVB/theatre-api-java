@@ -1,12 +1,14 @@
 package fontys.sem3.service.resources;
 
 
+import com.sun.istack.Builder;
 import fontys.sem3.service.model.Eveniment;
 import fontys.sem3.service.model.Seat;
 import fontys.sem3.service.repository.*;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 
+import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
@@ -27,7 +29,6 @@ public class EvenimentResources {
 
     @GET //GET at http://localhost:XXXX/theater/events/1
     @Path("/{id}")
-    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEvenimentPath(@PathParam("id") int id) throws SQLException {
         Eveniment eveniment = JDBC_EVENTS_REPOSITORY.getEveniment(id);
@@ -40,6 +41,7 @@ public class EvenimentResources {
 
     @GET //GET at http://localhost:XXXX/theater/events
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({ "administrator" })
     public Response getAllEveniments() {
         List<Eveniment> eveniments = JDBC_EVENTS_REPOSITORY.getEveniments();
 
@@ -49,7 +51,6 @@ public class EvenimentResources {
 
     @GET //GET at http://localhost:XXXX/theater/events/2/seats
     @Path("/{id}/seats")
-    @RolesAllowed({"Regular"})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEvenimentSeats(@PathParam("id") int id) {
 

@@ -6,6 +6,7 @@ import fontys.sem3.service.repository.*;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 
+import javax.annotation.security.DenyAll;
 import javax.ws.rs.*;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -45,7 +46,7 @@ public class UserResources {
             URI baseURI = UriBuilder.fromUri("http://localhost:9090/theater/events").build();
             WebTarget serviceTarget = client.target(baseURI);
 
-            return Response.temporaryRedirect(baseURI).build();
+            return Response.ok(userAccount).build();
         }
     }
 }

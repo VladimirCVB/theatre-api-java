@@ -42,7 +42,7 @@ public class EvenimentResourcesTest {
         EvenimentResources eventRes = new EvenimentResources();
 
         // Act - Execute the method to be tested
-        Response event = eventRes.getEvenimentPath(1);
+        Response event = eventRes.getEvenimentPath(2);
 
         // Assert - Check if the method postconditions is as expected
         assertEquals(200, event.getStatus());
