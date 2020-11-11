@@ -61,7 +61,7 @@ public class EvenimentResourcesTest {
         assertEquals(200, event.getStatus());
     }
 
-    @Test
+    /*@Test
     void TestUpdateEveniment() {
 
         // Arrange - Setup the code to be used
@@ -72,7 +72,7 @@ public class EvenimentResourcesTest {
 
         // Assert - Check if the method postconditions is as expected
         assertEquals(204, event.getStatus());
-    }
+    }*/
 
     @Test
     void TestDeleteEveniment() {

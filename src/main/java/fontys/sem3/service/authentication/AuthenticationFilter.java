@@ -50,7 +50,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
         //If no authorization information present; return null
         if (authorization == null || authorization.isEmpty()) {
-            Response response = Response.status(Response.Status.UNAUTHORIZED). entity("Missing username and/or password.").build();
+            Response response = Response.status(Response.Status.UNAUTHORIZED).entity("Missing username and/or password.").build();
             requestContext.abortWith(response);
             return;
         }

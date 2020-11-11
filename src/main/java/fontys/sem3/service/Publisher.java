@@ -31,7 +31,7 @@ class Publisher {
             resourceConfig.packages("authentication");
             resourceConfig.register(AuthenticationFilter.class);
             // create and start a grizzly server
-            HttpServer server = GrizzlyHttpServerFactory.createHttpServer(BASE_URI, resourceConfig, true);
+            HttpServer server = GrizzlyHttpServerFactory.createHttpServer(BASE_URI, customApplicationConfig, true);
 
             System.out.println("Hosting resources at " + BASE_URI.toURL());
 

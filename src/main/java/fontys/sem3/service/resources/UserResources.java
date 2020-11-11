@@ -39,14 +39,7 @@ public class UserResources {
         if (userAccount == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the eveniment.").build();
         } else {
-
-            ClientConfig config = new ClientConfig();
-            config.register(HttpAuthenticationFeature.basic("joe", "password"));
-            Client client = ClientBuilder.newClient(config);
-            URI baseURI = UriBuilder.fromUri("http://localhost:9090/theater/events").build();
-            WebTarget serviceTarget = client.target(baseURI);
-
-            return Response.ok(userAccount).build();
+            return Response.ok().header("Access-Control-Allow-Origin", "*").entity(new UserAccount()).build();
         }
     }
 }

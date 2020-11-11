@@ -119,10 +119,10 @@ public class JDBCEventsRepository extends JDBCRepository{
     }
 
     public boolean updateEveniment(int eventId) {
-
             try{
                 prepStatement = connect.prepareStatement("UPDATE seats SET available = 0 WHERE event_id = ?");
                 prepStatement.setInt(1, eventId);
+                //prepStatement.setInt(2, seats[0]);
                 prepStatement.executeUpdate();
             }
             catch (SQLException e){

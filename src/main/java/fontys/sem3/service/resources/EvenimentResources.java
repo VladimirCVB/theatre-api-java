@@ -41,7 +41,8 @@ public class EvenimentResources {
 
     @GET //GET at http://localhost:XXXX/theater/events
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({ "administrator" })
+    @PermitAll
+    /*@RolesAllowed({ "administrator" })*/
     public Response getAllEveniments() {
         List<Eveniment> eveniments = JDBC_EVENTS_REPOSITORY.getEveniments();
 
