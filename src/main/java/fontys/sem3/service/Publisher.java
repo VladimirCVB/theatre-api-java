@@ -2,6 +2,7 @@ package fontys.sem3.service;
 
 import fontys.sem3.service.authentication.AuthenticationFilter;
 import fontys.sem3.service.resources.EvenimentResources;
+import fontys.sem3.service.resources.UserResources;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -26,7 +27,7 @@ class Publisher {
 
         try {
             CustomApplicationConfig customApplicationConfig = new CustomApplicationConfig();
-            ResourceConfig resourceConfig = new ResourceConfig(EvenimentResources.class);
+            ResourceConfig resourceConfig = new ResourceConfig(UserResources.class, EvenimentResources.class);
 
             resourceConfig.packages("authentication");
             resourceConfig.register(AuthenticationFilter.class);

@@ -42,7 +42,6 @@ public class EvenimentResources {
     @GET //GET at http://localhost:XXXX/theater/events
     @Produces(MediaType.APPLICATION_JSON)
     @PermitAll
-    /*@RolesAllowed({ "administrator" })*/
     public Response getAllEveniments() {
         List<Eveniment> eveniments = JDBC_EVENTS_REPOSITORY.getEveniments();
 
@@ -77,6 +76,7 @@ public class EvenimentResources {
     }
 
     @DELETE //DELETE at http://localhost:XXXX/theater/events/1
+    @RolesAllowed({ "administrator" })
     @Path("/{id}")
     public Response deleteEveniment(@PathParam("id") int id) {
          JDBC_EVENTS_REPOSITORY.deleteEveniment(id);
@@ -85,6 +85,7 @@ public class EvenimentResources {
     }
 
     @POST //POST at http://localhost:XXXX/theater/events
+    @RolesAllowed({ "administrator" })
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createEveniment(Eveniment eveniment) {
         if (!JDBC_EVENTS_REPOSITORY.addEveniment(eveniment)){
