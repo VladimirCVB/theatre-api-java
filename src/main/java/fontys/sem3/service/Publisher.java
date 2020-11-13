@@ -1,6 +1,7 @@
 package fontys.sem3.service;
 
 import fontys.sem3.service.authentication.AuthenticationFilter;
+import fontys.sem3.service.authentication.CorsFilter;
 import fontys.sem3.service.resources.EvenimentResources;
 import fontys.sem3.service.resources.UserResources;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -27,12 +28,14 @@ class Publisher {
 
         try {
             CustomApplicationConfig customApplicationConfig = new CustomApplicationConfig();
-            ResourceConfig resourceConfig = new ResourceConfig(UserResources.class, EvenimentResources.class);
+            /*ResourceConfig resourceConfig = new ResourceConfig(UserResources.class, EvenimentResources.class);
 
             resourceConfig.packages("authentication");
-            resourceConfig.register(AuthenticationFilter.class);
+            resourceConfig.register(CorsFilter.class);
+            resourceConfig.register(AuthenticationFilter.class);*/
+
             // create and start a grizzly server
-            HttpServer server = GrizzlyHttpServerFactory.createHttpServer(BASE_URI, resourceConfig, true);
+            HttpServer server = GrizzlyHttpServerFactory.createHttpServer(BASE_URI, customApplicationConfig, true);
 
             System.out.println("Hosting resources at " + BASE_URI.toURL());
 

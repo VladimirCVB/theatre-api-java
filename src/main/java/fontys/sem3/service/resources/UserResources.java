@@ -45,7 +45,7 @@ public class UserResources {
         }
     }*/
 
-    @POST //POST at http://localhost:XXXX/theater/users
+    @GET //POST at http://localhost:XXXX/theater/users
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getUserAccount() {
         //getting user from the users list
@@ -54,7 +54,7 @@ public class UserResources {
             return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the eveniment.").build();
         } else {
             URI uri = URI.create("http://localhost:9090/theater/users/1");
-            return Response.created(uri).header("Access-Control-Allow-Origin", "*").build();
+            return Response.ok(123).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 }

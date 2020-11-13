@@ -26,7 +26,9 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) {
         // here you will perform AUTHENTICATION and AUTHORIZATION
         /* if you want to abort this HTTP request, you do this:
-        Response response = Response.status(Response.Status.UNAUTHORIZED).build(); requestContext.abortWith(response);
+        Response response = Response.status(Response.Status.UNAUTHORIZED).build();
+        requestContext.abortWith(response);
+        
          AUTHENTICATION:
          1. extract username and password from requestContext
          2. validate username and password (e.g., database)
@@ -100,8 +102,8 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
             Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
 
-            /* isUserAllowed : implement this method to check if this user has any of the roles in the rolesSet
-            if not isUserAllowed abort the requestContext with FORBIDDEN response*/
+             /*isUserAllowed : implement this method to check if this user has any of the roles in the rolesSet*/
+            /*if not isUserAllowed abort the requestContext with FORBIDDEN response*/
 
             //if (!isUserAllowed(username, password, rolesSet))
             String userRole = user.getUserRole(email, password);

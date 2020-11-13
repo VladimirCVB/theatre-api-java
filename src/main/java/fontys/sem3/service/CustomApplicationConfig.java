@@ -1,6 +1,8 @@
 package fontys.sem3.service;
 
 
+import fontys.sem3.service.authentication.AuthenticationFilter;
+import fontys.sem3.service.authentication.CorsFilter;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -13,6 +15,8 @@ public class CustomApplicationConfig extends ResourceConfig
 	{
 		packages("fontys.sem3.service.resources"); // find all resource endpoint classes in this package
 		// log exchanged http messages
+		register(AuthenticationFilter.class);
+		register(CorsFilter.class);
 		register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME),
 				Level.INFO, LoggingFeature.Verbosity.PAYLOAD_ANY, LoggingFeature.DEFAULT_MAX_ENTITY_SIZE));
 	}
