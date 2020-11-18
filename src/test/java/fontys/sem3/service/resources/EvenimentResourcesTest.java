@@ -2,11 +2,8 @@ package fontys.sem3.service.resources;
 
 import fontys.sem3.service.model.Eveniment;
 import fontys.sem3.service.model.Seat;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.Before;
+import fontys.sem3.service.repository.JDBCEventsRepository;
+import org.junit.jupiter.api.*;
 
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
@@ -16,6 +13,29 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EvenimentResourcesTest {
+
+    @BeforeAll
+    static void setUp() {
+        EvenimentResources eventRes = new EvenimentResources();
+
+        int id = 1;
+        String name = "Test Event";
+        String date = "12.10.2020";
+        String description = "test description";
+        String imgSrc = "none";
+
+        Eveniment event = new Eveniment(id, name, description, date, imgSrc, true);
+        event.setSeats(10);
+
+        // Act - Execute the method to be tested
+        Response response = eventRes.createEveniment(event);
+    }
+
+    @AfterAll
+    static void tearDown() {
+        JDBCEventsRepository eventsRepo = new JDBCEventsRepository();
+        eventsRepo.truncateTable();
+    }
 
     @Test
     void TestCreateEveniment() throws SQLException {
@@ -36,7 +56,7 @@ public class EvenimentResourcesTest {
         Response response = eventRes.createEveniment(event);
 
         // Assert - Check if the method postconditions is as expected
-        assertEquals(200, response.getStatus());
+        assertEquals(201, response.getStatus());
     }
 
     @Test
@@ -65,7 +85,7 @@ public class EvenimentResourcesTest {
         assertEquals(200, event.getStatus());
     }
 
-    /*@Test
+    @Test
     void TestUpdateEveniment() {
 
         // Arrange - Setup the code to be used
@@ -76,7 +96,7 @@ public class EvenimentResourcesTest {
 
         // Assert - Check if the method postconditions is as expected
         assertEquals(204, event.getStatus());
-    }*/
+    }
 
     @Test
     void TestDeleteEveniment() {
@@ -89,13 +109,5 @@ public class EvenimentResourcesTest {
 
         // Assert - Check if the method postconditions is as expected
         assertEquals(204, event.getStatus());
-    }
-
-    @BeforeAll
-    void setUp() {
-    }
-
-    @AfterAll
-    void tearDown() {
     }
 }

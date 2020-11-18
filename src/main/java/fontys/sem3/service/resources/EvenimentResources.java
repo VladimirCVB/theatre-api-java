@@ -92,9 +92,9 @@ public class EvenimentResources {
             String entity =  "Eveniment with id " + eveniment.getId() + " already exists.";
             return Response.status(Response.Status.CONFLICT).header("Access-Control-Allow-Origin", "*").entity(entity).build();
         } else {
-            String url = uriInfo.getAbsolutePath() + "/" + eveniment.getId(); // url of the created student
+            String url = "http://localhost:9090/theater/events/" + eveniment.getId(); // url of the created student
             URI uri = URI.create(url);
-            return Response.created(uri).header("Access-Control-Allow-Origin", "*").build();
+            return Response.created(uri).build();
         }
     }
 

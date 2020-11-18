@@ -261,6 +261,20 @@ public class JDBCEventsRepository extends JDBCRepository{
         return false;
     }
 
+    public boolean truncateTable(){
+        try{
+            String sql = "TRUNCATE TABLE events";
+            prepStatement = connect.prepareStatement(sql);
+            prepStatement.executeUpdate();
+
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return false;
+    }
+
 /*
 
     public List<UserAccount> getUsers() {return this.users;}
