@@ -2,7 +2,11 @@ package fontys.sem3.service.resources;
 
 import fontys.sem3.service.model.Eveniment;
 import fontys.sem3.service.model.Seat;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.Before;
 
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
@@ -85,5 +89,13 @@ public class EvenimentResourcesTest {
 
         // Assert - Check if the method postconditions is as expected
         assertEquals(204, event.getStatus());
+    }
+
+    @BeforeAll
+    void setUp() {
+    }
+
+    @AfterAll
+    void tearDown() {
     }
 }
