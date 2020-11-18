@@ -28,7 +28,7 @@ public class EvenimentResourcesTest {
         event.setSeats(10);
 
         // Act - Execute the method to be tested
-        Response response = eventRes.createEveniment(event);
+        eventRes.createEveniment(event);
     }
 
     @AfterAll
@@ -66,7 +66,7 @@ public class EvenimentResourcesTest {
         EvenimentResources eventRes = new EvenimentResources();
 
         // Act - Execute the method to be tested
-        Response event = eventRes.getEvenimentPath(2);
+        Response event = eventRes.getEvenimentPath(1);
 
         // Assert - Check if the method postconditions is as expected
         assertEquals(200, event.getStatus());
