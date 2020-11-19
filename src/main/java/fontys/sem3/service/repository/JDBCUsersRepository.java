@@ -50,7 +50,7 @@ public class JDBCUsersRepository extends JDBCRepository{
         return null;
     }
 
-    public boolean getUser(String email, String password) {
+    public boolean loginUser(String email, String password) {
         try{
             prepStatement = connect.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?");
             prepStatement.setString(1, email);

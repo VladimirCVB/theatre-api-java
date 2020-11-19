@@ -17,20 +17,6 @@ public class UserResources {
     // this has to be static because the service is stateless:
     private static final JDBCUsersRepository JDBC_USERS = new JDBCUsersRepository();
 
-    @GET //POST at http://localhost:XXXX/theater/users
-    @RolesAllowed({"administrator"})
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response getUserAccounts() {
-        //getting user from the users list
-        UserAccount userAccount = JDBC_USERS.getUserAccount(1);
-        if (userAccount == null) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the eveniment.").build();
-        } else {
-            URI uri = URI.create("http://localhost:9090/theater/users/1");
-            return Response.ok(123).header("Access-Control-Allow-Origin", "*").build();
-        }
-    }
-
     @GET //GET at http://localhost:XXXX/theater/events/1
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -41,6 +27,20 @@ public class UserResources {
         } else {
             return Response.ok(userAccount).header("Access-Control-Allow-Origin", "*").build();
         }
+    }
+
+    @GET //GET at http://localhost:XXXX/theater/events/1
+    @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response loginUser() throws SQLException {
+        /*boolean result = JDBC_USERS.loginUser("john@email.com", "123");
+        if (result == false) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the specified account.").build();
+        } else {
+            return Response.ok().header("Access-Control-Allow-Origin", "*").build();
+        }*/
+
+        return Response.ok().header("Access-Control-Allow-Origin", "*").build();
     }
 
     @PUT //PUT at http://localhost:XXXX/theater/events/2

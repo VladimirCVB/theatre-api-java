@@ -54,18 +54,6 @@ class UserResourcesTest {
     }
 
     @Test
-    void testGetUserAccounts() {
-        // Arrange - Setup the code to be used
-        UserResources userRes = new UserResources();
-
-        // Act - Execute the method to be tested
-        Response response = userRes.getUserAccounts();
-
-        // Assert - Check if the method postconditions is as expected
-        assertEquals(200, response.getStatus());
-    }
-
-    @Test
     void testUpdateAccount() {
         // Arrange - Setup the code to be used
         UserResources userRes = new UserResources();
