@@ -8,11 +8,11 @@ class UserAccountTest {
 
     private UserAccount testData(){
         int id = 1;
-        User user = new User("John Doe", 18);
+        String name = "John Doe";
         String email = "email@example.com";
         String password = "password";
 
-        UserAccount userAcc = new UserAccount(id, email, password, user);
+        UserAccount userAcc = new UserAccount(id, email, password, name);
 
         return userAcc;
     }

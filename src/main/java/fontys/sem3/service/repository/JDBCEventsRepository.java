@@ -10,7 +10,6 @@ import java.util.List;
 
 public class JDBCEventsRepository extends JDBCRepository{
 
-    private List<Seat> seatsList;
     private List<Eveniment> eventsList;
 
     private Connection connect;
@@ -26,6 +25,9 @@ public class JDBCEventsRepository extends JDBCRepository{
     private static Statement statement = null;
     private static ResultSet resultSet = null;
     private static PreparedStatement prepStatement = null;
+
+    private JDBCEventEarningsRepository eventEarningsRepository = new JDBCEventEarningsRepository();
+    private JDBCSeatsRepository seatsRepository  = new JDBCSeatsRepository();
 
     public List<Eveniment> getEveniments(){
 
@@ -80,8 +82,9 @@ public class JDBCEventsRepository extends JDBCRepository{
                 boolean access = resultSet.getBoolean(6);
 
                 Eveniment event;
+                event = new Eveniment(eventId, name, description, getSeats(eventId), date, imgSrc, access);
 
-                return event = new Eveniment(eventId, name, description, getSeats(eventId), date, imgSrc, access);
+                return event;
             }
         }
         catch (SQLException e){
@@ -93,29 +96,9 @@ public class JDBCEventsRepository extends JDBCRepository{
     }
 
     public List<Seat> getSeats(int eventId){
-        try{
-            prepStatement = connect.prepareStatement("SELECT * FROM seats WHERE event_id = ?");
-            prepStatement.setInt(1, eventId);
 
-            resultSet = prepStatement.executeQuery();
-            seatsList = new ArrayList<>();
+        return seatsRepository.getSeats(eventId);
 
-            while (resultSet.next()) {
-
-                int seatId = resultSet.getInt(1);
-                String number = resultSet.getString(2);
-                int price = resultSet.getInt(3);
-                boolean available = resultSet.getBoolean(4);
-
-                Seat seat = new Seat(seatId, price, number, available);
-
-                seatsList.add(seat);
-            }
-        }  catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return seatsList;
     }
 
     public boolean updateEveniment(int eventId) {
@@ -182,58 +165,13 @@ public class JDBCEventsRepository extends JDBCRepository{
 
     private boolean addSeats(List<Seat> seats){
 
-        //resolve pricing problem
-
-        if(getLastEventId() == -1){
-            return false;
-        }
-
-        int event_id = getLastEventId();
-
-        for (Seat seat : seats)
-        {
-            try{
-                String sql = "INSERT INTO seats ( number, price, available, event_id ) VALUES (?, ?, ?, ?)";
-                prepStatement = connect.prepareStatement(sql);
-
-                prepStatement.setString(1, seat.getNumber());
-                prepStatement.setDouble(2, seat.getPrice());
-                prepStatement.setBoolean(3, seat.getAvailable());
-                prepStatement.setInt(4, event_id);
-
-                prepStatement.executeUpdate();
-
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-
-        return false;
+       return seatsRepository.addSeats(seats, getLastEventId());
     }
 
     private boolean addEventEarnings(String event_date, String event_name){
 
-        if(getLastEventId() == -1){
-            return false;
-        }
+        return eventEarningsRepository.addEventEarnings(event_date, event_name, getLastEventId());
 
-        int event_id = getLastEventId();
-
-        try{
-            String sql = "INSERT INTO events_earnings ( sold_seats, earnings, event_id, event_date, event_name ) VALUES (0, 0, ?, ?, ?)";
-            prepStatement = connect.prepareStatement(sql);
-            prepStatement.setInt(1, event_id);
-            prepStatement.setString(2, event_date);
-            prepStatement.setString(3, event_name);
-
-            prepStatement.executeUpdate();
-            return true;
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return false;
     }
 
     public boolean deleteEveniment(int id) {
@@ -274,16 +212,4 @@ public class JDBCEventsRepository extends JDBCRepository{
 
         return false;
     }
-
-/*
-
-    public List<UserAccount> getUsers() {return this.users;}
-
-    public UserAccount getUserAccount(int id){
-        for (UserAccount userAccount : users) {
-            if (userAccount.getId() == id)
-                return userAccount;
-        }
-        return null;
-    }*/
 }

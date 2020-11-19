@@ -1,6 +1,6 @@
 package fontys.sem3.service.authentication;
 
-import fontys.sem3.service.repository.JDBCUsers;
+import fontys.sem3.service.repository.JDBCUsersRepository;
 
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
@@ -70,7 +70,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
         //if (!isValidUser(username, password))
 
-        JDBCUsers user = new JDBCUsers();
+        JDBCUsersRepository user = new JDBCUsersRepository();
         boolean status = user.getUser(email, password);
 
         if (!status) {

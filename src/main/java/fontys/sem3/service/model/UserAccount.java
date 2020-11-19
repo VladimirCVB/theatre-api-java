@@ -1,6 +1,6 @@
 package fontys.sem3.service.model;
 
-import java.time.LocalDate;
+import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,19 +8,19 @@ import java.util.Objects;
 public class UserAccount {
 
     private int id;
-    private User user;
+    private String name;
     private String email;
     private String password;
     private UserRole role = UserRole.regular;
     private List<Ticket> tickets;
 
-    public UserAccount(int id, String email, String password, User user){
+    public UserAccount(int id, String email, String password, String name){
 
         this.id = id;
         this.email = email;
         this.password = password;
         tickets = new ArrayList<>();
-        this.user = user;
+        this.name = name;
     }
 
     public UserAccount(){}
@@ -46,6 +46,9 @@ public class UserAccount {
         this.tickets.add(ticket);
     }
 
+    public String getName(){ return this.name; }
+    public void setName(String name) { this.name = name; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,7 +66,7 @@ public class UserAccount {
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
-                ", name='" + user.getName() + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }
