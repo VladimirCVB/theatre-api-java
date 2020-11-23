@@ -71,9 +71,9 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         //if (!isValidUser(username, password))
 
         JDBCUsersRepository user = new JDBCUsersRepository();
-        boolean status = user.loginUser(email, password);
+        int status = user.loginUser(email, password);
 
-        if (!status) {
+        if (status != -1) {
             Response response = Response.status(Response.Status.UNAUTHORIZED).entity("Invalid username and/or password.").build();
             requestContext.abortWith(response);
             return;

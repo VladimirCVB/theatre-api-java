@@ -50,24 +50,27 @@ public class JDBCUsersRepository extends JDBCRepository{
         return null;
     }
 
-    public boolean loginUser(String email, String password) {
+    public int loginUser(String email, String password) {
+
+        int userId = -1;
+
         try{
-            prepStatement = connect.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?");
+            prepStatement = connect.prepareStatement("SELECT id FROM users WHERE email = ? AND password = ?");
             prepStatement.setString(1, email);
             prepStatement.setString(2, password);
             resultSet = prepStatement.executeQuery();
 
             while (resultSet.next()){
 
-                return true;
+                userId = resultSet.getInt("id");
             }
         }
         catch (SQLException e){
             e.printStackTrace();
-            return false;
+            return userId;
         }
 
-        return false;
+        return userId;
     }
 
     public String getUserRole(String email, String password) {

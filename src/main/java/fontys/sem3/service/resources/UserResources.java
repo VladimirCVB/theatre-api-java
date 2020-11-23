@@ -8,6 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import static javax.ws.rs.core.MediaType.APPLICATION_FORM_URLENCODED;
@@ -29,6 +31,9 @@ public class UserResources {
     // this has to be static because the service is stateless:
     private static final JDBCUsersRepository JDBC_USERS = new JDBCUsersRepository();
 
+
+    //private static Logger logger;
+
     @GET //GET at http://localhost:XXXX/theater/events/1
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -39,20 +44,6 @@ public class UserResources {
         } else {
             return Response.ok(userAccount).header("Access-Control-Allow-Origin", "*").build();
         }
-    }
-
-    @GET //GET at http://localhost:XXXX/theater/events/1
-    @Path("/login")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response loginUser() throws SQLException {
-        /*boolean result = JDBC_USERS.loginUser("john@email.com", "123");
-        if (result == false) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the specified account.").build();
-        } else {
-            return Response.ok().header("Access-Control-Allow-Origin", "*").build();
-        }*/
-
-        return Response.ok().header("Access-Control-Allow-Origin", "*").build();
     }
 
     @PUT //PUT at http://localhost:XXXX/theater/events/2
@@ -97,16 +88,19 @@ public class UserResources {
                                      @FormParam("password") String password) {
         try {
 
-            // Authenticate the user using the credentials provided
-            boolean status = JDBC_USERS.loginUser("john@example.com", password);
+            //logger.info("#### login/password : " + "john@example.com" + "/" + password);
 
-            if (!status) {
-                Response response = Response.status(Response.Status.UNAUTHORIZED).entity("Invalid username and/or password. " + email + " " + password).build();
+            // Authenticate the user using the credentials provided
+            int userId = JDBC_USERS.loginUser("john@example.com", password);
+
+            if (userId == -1) {
+                Response response = Response.status(Response.Status.UNAUTHORIZED).entity("Invalid username and/or password. " + email + " " + password + userId).build();
                 return response;
             }
 
             // Issue a token for the user
-            String token = issueToken(email);
+            UserAccount userAccount = JDBC_USERS.getUserAccount(userId);
+            String token = issueToken(userAccount.getName());
 
             // Return the token on the response
             return Response.ok(token).header(AUTHORIZATION, "Bearer " + token).build();
@@ -116,15 +110,16 @@ public class UserResources {
         }
     }
 
-    private String issueToken(String login) {
+    private String issueToken(String name) {
         Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
         String jwtToken = Jwts.builder()
-                .setSubject("login")
+                .setSubject(name)
                 .setIssuer(uriInfo.getAbsolutePath().toString())
                 .setIssuedAt(new Date())
                 .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
+        //logger.info("#### generating token for a key : " + jwtToken + " - " + key);
         return jwtToken;
     }
 
