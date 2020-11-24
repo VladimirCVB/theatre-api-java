@@ -8,6 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 import javax.annotation.security.RolesAllowed;
+import javax.crypto.SecretKey;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -26,6 +27,9 @@ import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 
 @Path("/users")
 public class UserResources {
+
+    public static Key tokenKey;
+
     @Context
     private UriInfo uriInfo;
     // this has to be static because the service is stateless:
@@ -112,6 +116,7 @@ public class UserResources {
 
     private String issueToken(String name) {
         Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+        tokenKey = key;
         String jwtToken = Jwts.builder()
                 .setSubject(name)
                 .setIssuer(uriInfo.getAbsolutePath().toString())

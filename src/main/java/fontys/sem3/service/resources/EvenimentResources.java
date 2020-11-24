@@ -2,6 +2,7 @@ package fontys.sem3.service.resources;
 
 
 import com.sun.istack.Builder;
+import fontys.sem3.service.authentication.JWTTokenNeeded;
 import fontys.sem3.service.model.Eveniment;
 import fontys.sem3.service.model.Seat;
 import fontys.sem3.service.repository.*;
@@ -41,7 +42,7 @@ public class EvenimentResources {
 
     @GET //GET at http://localhost:XXXX/theater/events
     @Produces(MediaType.APPLICATION_JSON)
-    @PermitAll
+    @JWTTokenNeeded
     public Response getAllEveniments() {
         List<Eveniment> eveniments = JDBC_EVENTS_REPOSITORY.getEveniments();
 

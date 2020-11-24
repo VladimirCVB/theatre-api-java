@@ -1,5 +1,6 @@
 package fontys.sem3.service.authentication;
 
+import fontys.sem3.service.resources.UserResources;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -29,25 +30,26 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
         // Get the HTTP Authorization header from the request
         String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
-        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader == null) {
             //logger.severe("#### invalid authorizationHeader : " + authorizationHeader);
             throw new NotAuthorizedException("Authorization header must be provided");
         }
 
         // Extract the token from the HTTP Authorization header
-        String token = authorizationHeader.substring("Bearer".length()).trim();
+        String token = authorizationHeader.substring("Bearer=".length()).trim();
+
+        Key key = UserResources.tokenKey;
 
         try {
-
             // Validate the token
-            Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+            key = UserResources.tokenKey;
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
             //logger.info("#### valid token : " + token);
 
         } catch (Exception e) {
             //logger.severe("#### invalid token : " + token);
             requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+            System.out.println(key);
         }
     }
 }
