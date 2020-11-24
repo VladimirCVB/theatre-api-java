@@ -8,12 +8,10 @@ import java.util.List;
 
 public class JDBCSeatsRepository extends JDBCRepository {
 
-    private List<Seat> seatsList;
-
     private static Statement statement = null;
     private static ResultSet resultSet = null;
     private static PreparedStatement prepStatement = null;
-
+    private List<Seat> seatsList;
     private Connection connect;
 
     {
@@ -24,8 +22,8 @@ public class JDBCSeatsRepository extends JDBCRepository {
         }
     }
 
-    public List<Seat> getSeats(int eventId){
-        try{
+    public List<Seat> getSeats(int eventId) {
+        try {
             prepStatement = connect.prepareStatement("SELECT * FROM seats WHERE event_id = ?");
             prepStatement.setInt(1, eventId);
 
@@ -43,24 +41,23 @@ public class JDBCSeatsRepository extends JDBCRepository {
 
                 seatsList.add(seat);
             }
-        }  catch (SQLException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
         return seatsList;
     }
 
-    public boolean addSeats(List<Seat> seats, int lastEventId){
+    public boolean addSeats(List<Seat> seats, int lastEventId) {
 
-        if(lastEventId == -1){
+        if (lastEventId == -1) {
             return false;
         }
 
         int event_id = lastEventId;
 
-        for (Seat seat : seats)
-        {
-            try{
+        for (Seat seat : seats) {
+            try {
                 String sql = "INSERT INTO seats ( number, price, available, event_id ) VALUES (?, ?, ?, ?)";
                 prepStatement = connect.prepareStatement(sql);
 

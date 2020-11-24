@@ -66,6 +66,7 @@ public class EvenimentResources {
 
     @PUT //PUT at http://localhost:XXXX/theater/events/2
     @Consumes(MediaType.APPLICATION_JSON)
+    @JWTTokenNeeded
     @Path("/{id}")
     public Response updateEveniment(@PathParam("id") int id) {
         // Idempotent method. Always update (even if the resource has already been updated before).
