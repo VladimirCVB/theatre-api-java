@@ -33,11 +33,12 @@ public class JDBCUsersRepository extends JDBCRepository{
                 int userId = resultSet.getInt(1);
                 String name = resultSet.getString(2);
                 String email = resultSet.getString(3);
-                String password = resultSet.getString(4);
+                String password = "";
                 String role = resultSet.getString(5);
 
                 UserAccount userAccount;
                 userAccount = new UserAccount(userId, email, password, name);
+                userAccount.setRole(UserRole.valueOf(role));
 
                 return userAccount;
             }

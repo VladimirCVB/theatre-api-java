@@ -48,7 +48,7 @@ public class UserResources {
         if (userAccount == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the specified account.").build();
         } else {
-            return Response.ok(userAccount).header("Access-Control-Allow-Origin", "*").build();
+            return Response.ok(userAccount).build();
         }
     }
 

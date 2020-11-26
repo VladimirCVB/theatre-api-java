@@ -36,7 +36,7 @@ public class EvenimentResources {
         if (eveniment == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Please provide a valid id for the eveniment.").build();
         } else {
-            return Response.ok(eveniment).header("Access-Control-Allow-Origin", "*").build();
+            return Response.ok(eveniment).build();
         }
     }
 
