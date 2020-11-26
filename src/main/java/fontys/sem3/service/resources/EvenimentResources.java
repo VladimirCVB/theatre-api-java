@@ -41,8 +41,8 @@ public class EvenimentResources {
     }
 
     @GET //GET at http://localhost:XXXX/theater/events
-    @Produces(MediaType.APPLICATION_JSON)
     @JWTTokenNeeded
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getAllEveniments() {
         List<Eveniment> eveniments = JDBC_EVENTS_REPOSITORY.getEveniments();
 
@@ -87,6 +87,7 @@ public class EvenimentResources {
     }
 
     @POST //POST at http://localhost:XXXX/theater/events
+    @JWTTokenNeeded
     @RolesAllowed({ "administrator" })
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createEveniment(Eveniment eveniment) {
@@ -99,6 +100,4 @@ public class EvenimentResources {
             return Response.created(uri).build();
         }
     }
-
-
 }

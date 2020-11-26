@@ -106,7 +106,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             /*if not isUserAllowed abort the requestContext with FORBIDDEN response*/
 
             //if (!isUserAllowed(username, password, rolesSet))
-            String userRole = user.getUserRole(email, password);
+            String userRole = user.getUserRole("1");
             for(String role : rolesSet){
                 if (!role.equals(userRole)) {
                     Response response = Response.status(Response.Status.FORBIDDEN).build();
@@ -114,12 +114,6 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 }
                 return;
             }
-
-            /*if (true == false) {
-                Response response = Response.status(Response.Status.FORBIDDEN).build();
-                requestContext.abortWith(response);
-                return;
-            }*/
         }
     }
 }

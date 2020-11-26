@@ -73,16 +73,15 @@ public class JDBCUsersRepository extends JDBCRepository{
         return userId;
     }
 
-    public String getUserRole(String email, String password) {
+    public String getUserRole(String id) {
         try{
-            prepStatement = connect.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?");
-            prepStatement.setString(1, email);
-            prepStatement.setString(2, password);
+            prepStatement = connect.prepareStatement("SELECT role FROM users WHERE id = ?");
+            prepStatement.setString(1, id);
             resultSet = prepStatement.executeQuery();
 
             while (resultSet.next()){
 
-                String role = resultSet.getString(5);
+                String role = resultSet.getString(1);
 
                 return role;
             }

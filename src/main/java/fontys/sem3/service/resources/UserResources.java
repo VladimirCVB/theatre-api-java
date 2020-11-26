@@ -1,6 +1,7 @@
 package fontys.sem3.service.resources;
 
 
+import fontys.sem3.service.authentication.JWTTokenNeeded;
 import fontys.sem3.service.model.UserAccount;
 import fontys.sem3.service.repository.*;
 import io.jsonwebtoken.Jwts;
@@ -39,6 +40,7 @@ public class UserResources {
     //private static Logger logger;
 
     @GET //GET at http://localhost:XXXX/theater/events/1
+    @JWTTokenNeeded
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserAccount(@PathParam("id") int id) throws SQLException {
@@ -88,23 +90,23 @@ public class UserResources {
     @Path("/login")
     @Consumes(APPLICATION_FORM_URLENCODED)
     @Produces(APPLICATION_JSON)
-    public Response authenticateUser(@FormParam("email") String email,
+    public Response authenticateUser(@FormParam("login") String login,
                                      @FormParam("password") String password) {
         try {
 
             //logger.info("#### login/password : " + "john@example.com" + "/" + password);
 
             // Authenticate the user using the credentials provided
-            int userId = JDBC_USERS.loginUser("john@example.com", password);
+            int userId = JDBC_USERS.loginUser(login, password);
 
             if (userId == -1) {
-                Response response = Response.status(Response.Status.UNAUTHORIZED).entity("Invalid username and/or password. " + email + " " + password + userId).build();
+                Response response = Response.status(Response.Status.UNAUTHORIZED).entity("Invalid username and/or password. " + login + " " + password + userId).build();
                 return response;
             }
 
             // Issue a token for the user
             UserAccount userAccount = JDBC_USERS.getUserAccount(userId);
-            String token = issueToken(userAccount.getName());
+            String token = issueToken(String.valueOf(userAccount.getId()));
 
             // Return the token on the response
             return Response.ok(token).header(AUTHORIZATION, "Bearer " + token).build();
@@ -114,11 +116,11 @@ public class UserResources {
         }
     }
 
-    private String issueToken(String name) {
+    private String issueToken(String id) {
         Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
         tokenKey = key;
         String jwtToken = Jwts.builder()
-                .setSubject(name)
+                .setSubject(id)
                 .setIssuer(uriInfo.getAbsolutePath().toString())
                 .setIssuedAt(new Date())
                 .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))

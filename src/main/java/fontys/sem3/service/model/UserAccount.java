@@ -1,6 +1,5 @@
 package fontys.sem3.service.model;
 
-import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
