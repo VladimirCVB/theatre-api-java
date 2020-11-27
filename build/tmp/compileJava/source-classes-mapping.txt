@@ -8,9 +8,8 @@ fontys/sem3/service/repository/JDBCSeatsRepository.java
  fontys.sem3.service.repository.JDBCSeatsRepository
 fontys/sem3/service/model/UserAccount.java
  fontys.sem3.service.model.UserAccount
-fontys/sem3/service/resources/EvenimentResources.java
- fontys.sem3.service.resources.EvenimentResources
- fontys.sem3.service.resources.EvenimentResources$1
+fontys/sem3/service/repository/JDBCUsersRepository.java
+ fontys.sem3.service.repository.JDBCUsersRepository
 fontys/sem3/service/authentication/CorsFilter.java
  fontys.sem3.service.authentication.CorsFilter
 fontys/sem3/service/model/Ticket.java
@@ -35,5 +34,6 @@ fontys/sem3/service/authentication/JWTTokenNeededFilter.java
  fontys.sem3.service.authentication.JWTTokenNeededFilter
 fontys/sem3/service/resources/UserResources.java
  fontys.sem3.service.resources.UserResources
-fontys/sem3/service/repository/JDBCUsersRepository.java
- fontys.sem3.service.repository.JDBCUsersRepository
+fontys/sem3/service/resources/EvenimentResources.java
+ fontys.sem3.service.resources.EvenimentResources
+ fontys.sem3.service.resources.EvenimentResources$1

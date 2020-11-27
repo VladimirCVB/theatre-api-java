@@ -41,7 +41,6 @@ public class EvenimentResources {
     }
 
     @GET //GET at http://localhost:XXXX/theater/events
-    @JWTTokenNeeded
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllEveniments() {
         List<Eveniment> eveniments = JDBC_EVENTS_REPOSITORY.getEveniments();
