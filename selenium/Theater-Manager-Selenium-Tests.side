@@ -1,0 +1,156 @@
+{
+  "id": "e39fd520-7861-4845-9bb9-d11a7b37a9bc",
+  "version": "2.0",
+  "name": "Theater-Manager",
+  "url": "http://localhost:8080/#/connectivity",
+  "tests": [{
+    "id": "e840425d-3877-4cbe-8755-db1a622997c0",
+    "name": "Log in",
+    "commands": [{
+      "id": "f02ec7af-6fc1-459e-9650-6685652a976b",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/#/connectivity",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "34ca284c-63a4-4828-81a5-6bcfe737019c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "66e051a3-0438-4d1a-8cbf-61ac03287006",
+      "comment": "",
+      "command": "click",
+      "target": "id=first_name",
+      "targets": [
+        ["id=first_name", "id"],
+        ["css=#first_name", "css:finder"],
+        ["xpath=//input[@id='first_name']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[2]/div/form/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "265888de-c0e3-4434-9c9f-4b1b6ec4a3dc",
+      "comment": "",
+      "command": "type",
+      "target": "id=first_name",
+      "targets": [
+        ["id=first_name", "id"],
+        ["css=#first_name", "css:finder"],
+        ["xpath=//input[@id='first_name']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[2]/div/form/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "john@example.com"
+    }, {
+      "id": "aa0fd206-9d35-4c02-ac58-022916c6c875",
+      "comment": "",
+      "command": "click",
+      "target": "id=email_address",
+      "targets": [
+        ["id=email_address", "id"],
+        ["css=#email_address", "css:finder"],
+        ["xpath=//input[@id='email_address']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[2]/div/form/div/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ff62853b-c63b-43b4-9866-bb6ef0d84c8f",
+      "comment": "",
+      "command": "type",
+      "target": "id=email_address",
+      "targets": [
+        ["id=email_address", "id"],
+        ["css=#email_address", "css:finder"],
+        ["xpath=//input[@id='email_address']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[2]/div/form/div/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "123"
+    }, {
+      "id": "5d0dd13c-01ec-4d2f-b9f6-93e0c9bf6654",
+      "comment": "",
+      "command": "click",
+      "target": "css=.float-right",
+      "targets": [
+        ["css=.float-right", "css:finder"],
+        ["xpath=//input[@value='Log In']", "xpath:attributes"],
+        ["xpath=//div[@id='app']/div[2]/div/form/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form/div/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0d75258f-5573-4684-87ca-4c7462cf6695",
+      "comment": "",
+      "command": "click",
+      "target": "css=.text-5xl",
+      "targets": [
+        ["css=.text-5xl", "css:finder"],
+        ["xpath=//div[@id='app']/div[2]/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Welcome to the Theater')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "8a16a765-79f2-43a7-86fe-b1cba993f36d",
+    "name": "See Events on Home Page",
+    "commands": [{
+      "id": "17707c76-a623-4dd9-882f-d63f76dc6243",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/#/connectivity",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "14db5f96-2732-4cdc-ac29-e0ceca5f5b6c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "56f87317-c5fb-46fa-b84d-e631853b2902",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.px-3:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//div[@id='nav']/nav/div/div/div/div[2]/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "12b3b033-f9c0-4a88-af80-82b60eebce42",
+      "comment": "",
+      "command": "click",
+      "target": "css=.content-between:nth-child(1) .text-justify",
+      "targets": [
+        ["css=.content-between:nth-child(1) .text-justify", "css:finder"],
+        ["xpath=//div[@id='content']/div/div/div/div/p", "xpath:idRelative"],
+        ["xpath=//p", "xpath:position"],
+        ["xpath=//p[contains(.,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sed laoreet velit. Cras et ornare dui. Morbi sollicitudin posuere sem in ultrices. Sed sagittis, velit interdum auctor luctus, tortor massa rhoncus dui, quis finibus ex orci nec nibh. Curabitur eu condimentum ex. Donec id dolor sed turpis interdum eleifend.')]", "xpath:innerText"]
+      ],
+      "value": "Lorem"
+    }]
+  }],
+  "suites": [{
+    "id": "3fe613af-fa34-4b2e-867e-2ac2dc53b5f8",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:8080/", "http://localhost:8080/#/connectivity", "http://localhost:8080/#/admin/eventcreator"],
+  "plugins": []
+}
