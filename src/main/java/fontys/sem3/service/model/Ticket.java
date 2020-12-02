@@ -10,16 +10,15 @@ import java.util.Objects;
 public class Ticket {
 
     private int id;
-    private Eveniment eveniment;
     private String dateOfPurchase;
     private double price;
     private List<Seat> seats = new ArrayList<Seat>();;
 
-    public Ticket(Eveniment eveniment, String dateOfPurchase, List<Seat> seats) {
+    public Ticket(String dateOfPurchase, List<Seat> seats) {
 
-        this.eveniment = eveniment;
         this.dateOfPurchase = dateOfPurchase;
         this.seats = seats;
+        this.getPrice();
     }
 
     public Ticket(){}
@@ -28,11 +27,6 @@ public class Ticket {
         return this.id;
     }
     public void setId(int id){ this.id = id; }
-
-    public Eveniment getEveniment() {
-        return this.eveniment;
-    }
-    public void setEveniment(Eveniment event){ this.eveniment = event; }
 
     public double getPrice() {
         int totalPrice = 0;
@@ -51,6 +45,11 @@ public class Ticket {
     }
     public void setSeats(List<Seat> seats){ this.seats = seats; }
 
+    public String getDateOfPurchase(){
+        return this.dateOfPurchase;
+    }
+    public void setDateOfPurchase(String dateOfPurchase){ this.dateOfPurchase = dateOfPurchase; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,7 +67,6 @@ public class Ticket {
     public String toString() {
         return "Ticket{" +
                 "price='" + price + '\'' +
-                ", eveniment='" + eveniment + '\'' +
                 ", date of purchase='" + dateOfPurchase + '\'' +
                 '}';
     }
