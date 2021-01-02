@@ -12,7 +12,7 @@ image: gradle:alpine
 
 sonarqube-check:
   stage: test
-  script: gradle sonarqube -Dsonar.qualitygate.wait=true
+  script: gradle sonarqube 
   allow_failure: true
   only:
     - Chat-System
