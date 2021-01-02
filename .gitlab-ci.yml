@@ -8,13 +8,16 @@ variables:
   SONAR_HOST_URL: "http://localhost:9000"
   GIT_DEPTH: 0
 
+image:
+  name: sonarsource/sonar-scanner-cli:latest
+  entrypoint: [""]
+
 sonarqube-check:
   stage: test
   script:
     - sonar-scanner -Dsonar.qualitygate.wait=true
   allow_failure: true
   only:
-    - master
     - Chat-System
     
 build:
