@@ -8,14 +8,11 @@ variables:
   SONAR_HOST_URL: "http://localhost:9000"
   GIT_DEPTH: 0
 
-image:
-  name: sonarsource/sonar-scanner-cli:latest
-  entrypoint: [""]
+image: gradle:alpine
 
 sonarqube-check:
   stage: test
-  script:
-    - sonar-scanner -Dsonar.qualitygate.wait=true
+  script: gradle sonarqube -Dsonar.qualitygate.wait=true
   allow_failure: true
   only:
     - Chat-System
