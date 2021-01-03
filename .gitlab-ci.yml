@@ -15,7 +15,7 @@ sonarqube-check:
   script: gradle sonarqube 
   allow_failure: true
   only:
-    - Chat-System
+    - master
     
 build:
   script:
