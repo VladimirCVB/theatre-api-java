@@ -4,9 +4,19 @@ before_script:
 
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-  SONAR_TOKEN: ""
+  SONAR_TOKEN: "d5c495767d668bcd3b5654894d18d05904691da6"
   SONAR_HOST_URL: "http://localhost:9000"
- 
+  GIT_DEPTH: 0
+
+image: gradle:alpine
+
+sonarqube-check:
+  stage: test
+  script: gradle sonarqube 
+  allow_failure: true
+  only:
+    - Chat-System
+    
 build:
   script:
     - ./gradlew assemble
