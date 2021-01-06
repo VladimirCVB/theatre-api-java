@@ -73,13 +73,18 @@ public class UserResources {
     }
 
     @POST //POST at http://localhost:XXXX/theater/events
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createAccount(UserAccount userAccount) {
-        if (!JDBC_USERS.addUserAccount(userAccount)){
+    @Path("/create")
+    @Consumes(APPLICATION_FORM_URLENCODED)
+    @Produces(APPLICATION_JSON)
+    public Response createAccount(@FormParam("email") String email,
+                                  @FormParam("name") String name,
+                                  @FormParam("password") String password) {
+
+        if (!JDBC_USERS.addUserAccount(name, email, password)){
             String entity =  "User with the same email already exists.";
             return Response.status(Response.Status.CONFLICT).header("Access-Control-Allow-Origin", "*").entity(entity).build();
         } else {
-            String url = "http://localhost:9090/theater/users/" + userAccount.getId(); // url of the created student
+            String url = "http://localhost:9090/theater/users/";
             URI uri = URI.create(url);
             return Response.created(uri).build();
         }
@@ -94,13 +99,11 @@ public class UserResources {
                                      @FormParam("password") String password) {
         try {
 
-            //logger.info("#### login/password : " + "john@example.com" + "/" + password);
-
             // Authenticate the user using the credentials provided
             int userId = JDBC_USERS.loginUser(login, password);
 
             if (userId == -1) {
-                Response response = Response.status(Response.Status.UNAUTHORIZED).entity("Invalid username and/or password. " + login + " " + password + userId).build();
+                Response response = Response.status(Response.Status.UNAUTHORIZED).entity("Invalid username and/or password.").build();
                 return response;
             }
 

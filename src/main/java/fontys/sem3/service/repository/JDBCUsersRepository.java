@@ -124,19 +124,39 @@ public class JDBCUsersRepository extends JDBCRepository{
         return false;
     }
 
-    public boolean addUserAccount(UserAccount userAccount){
+    public boolean addUserAccount(String name, String email, String password){
+        if(!checkEmail(email)){
+            try{
+                String sql = "INSERT INTO users ( name, email, password, role ) VALUES (?, ?, ?, ?)";
+                prepStatement = connect.prepareStatement(sql);
+                prepStatement.setString(1, name);
+                prepStatement.setString(2, email);
+                prepStatement.setString(3, password);
+                prepStatement.setString(4, "regular");
+
+                prepStatement.executeUpdate();
+
+                return true;
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    private boolean checkEmail(String email){
         try{
-            String sql = "INSERT INTO users ( name, email, password, role ) VALUES (?, ?, ?, ?)";
-            prepStatement = connect.prepareStatement(sql);
-            prepStatement.setString(1, userAccount.getName());
-            prepStatement.setString(2, userAccount.getEmail());
-            prepStatement.setString(3, userAccount.getPassword());
-            prepStatement.setString(4, userAccount.getRole().name());
+            prepStatement = connect.prepareStatement("SELECT * FROM users WHERE email = ?");
+            prepStatement.setString(1, email);
+            resultSet = prepStatement.executeQuery();
+            String selectedEmail = "";
 
-            prepStatement.executeUpdate();
+            while (resultSet.next()){
+                selectedEmail = resultSet.getString(1);
+            }
 
-            return true;
-
+            if(selectedEmail != ""){ return true; }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
