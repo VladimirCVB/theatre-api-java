@@ -67,9 +67,9 @@ public class EvenimentResources {
     @Consumes(MediaType.APPLICATION_JSON)
     @JWTTokenNeeded
     @Path("/{id}")
-    public Response updateEveniment(@PathParam("id") int id) {
+    public Response updateEveniment(@PathParam("id") int id, int[] seatIds) {
         // Idempotent method. Always update (even if the resource has already been updated before).
-        if (JDBC_EVENTS_REPOSITORY.updateEveniment(id)) {
+        if (JDBC_EVENTS_REPOSITORY.updateEveniment(seatIds)) {
             return Response.noContent().header("Access-Control-Allow-Origin", "*").build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).entity("Please provide a valid event id.").header("Access-Control-Allow-Origin", "*").build();
