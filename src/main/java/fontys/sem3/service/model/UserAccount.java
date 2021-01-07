@@ -41,8 +41,8 @@ public class UserAccount {
     }
 
     public List<Ticket> getTickets() { return tickets; }
-    public void setTicket(Ticket ticket){
-        this.tickets.add(ticket);
+    public void setTicket(List<Ticket> ticketsList){
+        this.tickets = ticketsList;
     }
 
     public String getName(){ return this.name; }

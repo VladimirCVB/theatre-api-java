@@ -3,6 +3,7 @@ package fontys.sem3.service.repository;
 import fontys.sem3.service.model.*;
 
 import java.sql.*;
+import java.util.List;
 
 public class JDBCUsersRepository extends JDBCRepository{
 
@@ -41,7 +42,7 @@ public class JDBCUsersRepository extends JDBCRepository{
                 userAccount = new UserAccount(userId, email, password, name);
                 userAccount.setRole(UserRole.valueOf(role));
 
-                Ticket ticket = ticketsRepository.getTicket(userId);
+                List<Ticket> ticket = ticketsRepository.getTicket(userId);
                 userAccount.setTicket(ticket);
 
                 return userAccount;

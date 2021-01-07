@@ -91,4 +91,20 @@ public class JDBCSeatsRepository extends JDBCRepository {
 
         return false;
     }
+
+    public boolean updateSeatTicket(int[] seatIds, int ticketId) {
+        for(int i = 0; i < seatIds.length - 1; i++){
+            try{
+                prepStatement = connect.prepareStatement("UPDATE seats SET ticket_id = ? WHERE id = ?");
+                prepStatement.setInt(1, ticketId);
+                prepStatement.setInt(2, seatIds[i]);
+                prepStatement.executeUpdate();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
 }

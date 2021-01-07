@@ -27,6 +27,8 @@ public class EvenimentResources {
     private UriInfo uriInfo;
     // this has to be static because the service is stateless:
     private static final JDBCEventsRepository JDBC_EVENTS_REPOSITORY = new JDBCEventsRepository();
+    private static final JDBCTicketsRepository JDBC_TICKETS_REPOSITORY = new JDBCTicketsRepository();
+    private static final JDBCSeatsRepository JDBC_SEATS_REPOSITORY = new JDBCSeatsRepository();
 
     @GET //GET at http://localhost:XXXX/theater/events/1
     @Path("/{id}")
@@ -70,6 +72,9 @@ public class EvenimentResources {
     public Response updateEveniment(@PathParam("id") int id, int[] seatIds) {
         // Idempotent method. Always update (even if the resource has already been updated before).
         if (JDBC_EVENTS_REPOSITORY.updateEveniment(seatIds)) {
+            int userId = seatIds.length - 1;
+            int ticketId = JDBC_TICKETS_REPOSITORY.addTicket(String.valueOf(seatIds[userId]));
+            JDBC_SEATS_REPOSITORY.updateSeatTicket(seatIds, ticketId);
             return Response.noContent().header("Access-Control-Allow-Origin", "*").build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).entity("Please provide a valid event id.").header("Access-Control-Allow-Origin", "*").build();

@@ -2,6 +2,9 @@ package fontys.sem3.service.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserAccountTest {
@@ -47,11 +50,11 @@ class UserAccountTest {
         UserAccount userAccount = testData();
 
         // Act - Execute the method to be tested
-        Ticket ticket = new Ticket();
+        List<Ticket> tickets = new ArrayList<>();
 
-        userAccount.setTicket(ticket);
+        userAccount.setTicket(tickets);
 
         // Assert - Check if the method postconditions is as expected
-        assertEquals(ticket, userAccount.getTickets().get(0));
+        assertEquals(tickets, userAccount.getTickets());
     }
 }

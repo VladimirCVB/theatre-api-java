@@ -3,6 +3,8 @@ package fontys.sem3.service.repository;
 import fontys.sem3.service.model.*;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCTicketsRepository extends JDBCRepository{
@@ -20,9 +22,10 @@ public class JDBCTicketsRepository extends JDBCRepository{
     private static ResultSet resultSet = null;
     private static PreparedStatement prepStatement = null;
 
-    public Ticket getTicket(int id) {
+    public List<Ticket> getTicket(int id) {
 
         JDBCSeatsRepository seatsRepository = new JDBCSeatsRepository();
+        List<Ticket> ticketsList = new ArrayList<>();
 
         try{
             prepStatement = connect.prepareStatement("SELECT * FROM tickets WHERE user_id = ?");
@@ -39,14 +42,62 @@ public class JDBCTicketsRepository extends JDBCRepository{
                 ticket = new Ticket(dateOfPurchase, seats);
                 ticket.getPrice();
 
-                return ticket;
+                ticketsList.add(ticket);
             }
+
+            return ticketsList;
         }
         catch (SQLException e){
             e.printStackTrace();
             return null;
         }
+    }
 
-        return null;
+    public int addTicket(String userId){
+        try{
+            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date(System.currentTimeMillis());
+            String currentDate = formatter.format(date);
+
+            String sql = "INSERT INTO tickets ( dateOfPurchase, price, user_id ) VALUES (?, ?, ?)";
+            prepStatement = connect.prepareStatement(sql);
+            prepStatement.setString(1, currentDate);
+            prepStatement.setString(2, "0");
+            prepStatement.setString(3, userId);
+
+            prepStatement.executeUpdate();
+
+            int ticketId = getLastTicketId();
+            return ticketId;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    private int getLastTicketId(){
+
+        int ticketId = 1;
+
+        try{
+            prepStatement = connect.prepareStatement("SELECT MAX(id) FROM tickets");
+            resultSet = prepStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                ticketId = resultSet.getInt(1);
+
+                if(ticketId == -1){
+                    return 1;
+                }
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return ticketId;
     }
 }
