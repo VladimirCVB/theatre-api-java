@@ -17,6 +17,14 @@ fontys/sem3/service/model/Ticket.java
  fontys.sem3.service.model.Ticket
 fontys/sem3/service/authentication/CorsFilter.java
  fontys.sem3.service.authentication.CorsFilter
+fontys/sem3/service/authentication/AuthenticationFilter.java
+ fontys.sem3.service.authentication.AuthenticationFilter
+fontys/sem3/service/authentication/JWTTokenNeededFilter.java
+ fontys.sem3.service.authentication.JWTTokenNeededFilter
+fontys/sem3/service/model/Ticket.java
+ fontys.sem3.service.model.Ticket
+fontys/sem3/service/resources/UserResources.java
+ fontys.sem3.service.resources.UserResources
 fontys/sem3/service/authentication/JWTTokenNeeded.java
  fontys.sem3.service.authentication.JWTTokenNeeded
 fontys/sem3/service/model/Eveniment.java
@@ -35,5 +43,20 @@ fontys/sem3/service/authentication/JWTTokenNeededFilter.java
  fontys.sem3.service.authentication.JWTTokenNeededFilter
 fontys/sem3/service/resources/UserResources.java
  fontys.sem3.service.resources.UserResources
+fontys/sem3/service/chatapp/ChatWebSocket.java
+ fontys.sem3.service.chatapp.ChatWebSocket
+fontys/sem3/service/resources/EvenimentResources.java
+ fontys.sem3.service.resources.EvenimentResources
+ fontys.sem3.service.resources.EvenimentResources$1
+fontys/sem3/service/model/Seat.java
+ fontys.sem3.service.model.Seat
+fontys/sem3/service/repository/JDBCTicketsRepository.java
+ fontys.sem3.service.repository.JDBCTicketsRepository
+fontys/sem3/service/repository/JDBCEventEarningsRepository.java
+ fontys.sem3.service.repository.JDBCEventEarningsRepository
+fontys/sem3/service/authentication/CorsFilter.java
+ fontys.sem3.service.authentication.CorsFilter
+fontys/sem3/service/repository/JDBCEventsRepository.java
+ fontys.sem3.service.repository.JDBCEventsRepository
 fontys/sem3/service/repository/JDBCUsersRepository.java
  fontys.sem3.service.repository.JDBCUsersRepository

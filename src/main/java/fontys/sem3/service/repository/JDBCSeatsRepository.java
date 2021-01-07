@@ -23,9 +23,25 @@ public class JDBCSeatsRepository extends JDBCRepository {
     }
 
     public List<Seat> getSeats(int eventId) {
+
+        String query = "SELECT * FROM seats WHERE event_id = ?";
+        List<Seat> seats = getSeatsAction(eventId, query);
+
+        return seats;
+    }
+
+    public List<Seat> getSeatsByTicket(int ticketId) {
+
+        String query = "SELECT * FROM seats WHERE ticket_id = ?";
+        List<Seat> seats = getSeatsAction(ticketId, query);
+
+        return seats;
+    }
+
+    private List<Seat> getSeatsAction(int id, String query) {
         try {
-            prepStatement = connect.prepareStatement("SELECT * FROM seats WHERE event_id = ?");
-            prepStatement.setInt(1, eventId);
+            prepStatement = connect.prepareStatement(query);
+            prepStatement.setInt(1, id);
 
             resultSet = prepStatement.executeQuery();
             seatsList = new ArrayList<>();

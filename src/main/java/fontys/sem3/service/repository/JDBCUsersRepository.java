@@ -3,8 +3,6 @@ package fontys.sem3.service.repository;
 import fontys.sem3.service.model.*;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class JDBCUsersRepository extends JDBCRepository{
 
@@ -23,6 +21,9 @@ public class JDBCUsersRepository extends JDBCRepository{
     private static PreparedStatement prepStatement = null;
 
     public UserAccount getUserAccount(int id) {
+
+        JDBCTicketsRepository ticketsRepository = new JDBCTicketsRepository();
+
         try{
             prepStatement = connect.prepareStatement("SELECT * FROM users WHERE id = ?");
             prepStatement.setInt(1, id);
@@ -39,6 +40,9 @@ public class JDBCUsersRepository extends JDBCRepository{
                 UserAccount userAccount;
                 userAccount = new UserAccount(userId, email, password, name);
                 userAccount.setRole(UserRole.valueOf(role));
+
+                Ticket ticket = ticketsRepository.getTicket(userId);
+                userAccount.setTicket(ticket);
 
                 return userAccount;
             }
