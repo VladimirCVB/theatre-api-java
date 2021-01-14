@@ -9,15 +9,9 @@ variables:
   GIT_DEPTH: 0
 
 image: gradle:alpine
-
-sonarqube-check:
-  stage: test
-  script: gradle sonarqube 
-  allow_failure: true
-  only:
-    - master
     
 build:
+  stage: build
   script:
     - ./gradlew assemble
  
@@ -25,6 +19,13 @@ test:
   stage: test
   script:
     - ./gradlew test
+
+sonarqube-check:
+  stage: test
+  script: gradle sonarqube 
+  allow_failure: true
+  only:
+    - master
  
 after_script:
   - echo "End CI"
