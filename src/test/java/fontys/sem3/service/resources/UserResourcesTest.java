@@ -18,7 +18,7 @@ class UserResourcesTest {
     private static UserAccount testData(){
         int id = 1;
         String name = "John Doe";
-        String email = "johndoe@example.com";
+        String email = "johndoe@gmail.com";
         String password = "testPassword";
 
         UserAccount userAccount = new UserAccount(id, name, email, password);
@@ -32,7 +32,7 @@ class UserResourcesTest {
 
         UserAccount userAccount = testData();
 
-        userRes.createAccount(userAccount);
+        userRes.createAccount(userAccount.getEmail(), userAccount.getName(), userAccount.getPassword());
     }
 
     @AfterAll
@@ -83,10 +83,45 @@ class UserResourcesTest {
         UserResources userRes = new UserResources();
 
         // Act - Execute the method to be tested
-        UserAccount userAccount = testData();
-        Response response = userRes.createAccount(userAccount);
+        Response response = userRes.createAccount("newpassword@gmail.com", "John Doe The Third", "asd");
 
         // Assert - Check if the method postconditions is as expected
         assertEquals(201, response.getStatus());
+    }
+
+    @Test
+    void testCreateAccountWrongEmail() {
+        // Arrange - Setup the code to be used
+        UserResources userRes = new UserResources();
+
+        // Act - Execute the method to be tested
+        Response response = userRes.createAccount("newpassword.com", "John Doe The Third", "asd");
+
+        // Assert - Check if the method postconditions is as expected
+        assertEquals(409, response.getStatus());
+    }
+
+    @Test
+    void testCreateAccountNoPassword() {
+        // Arrange - Setup the code to be used
+        UserResources userRes = new UserResources();
+
+        // Act - Execute the method to be tested
+        Response response = userRes.createAccount("newpassword@gmail.com", "John Doe The Third", "");
+
+        // Assert - Check if the method postconditions is as expected
+        assertEquals(409, response.getStatus());
+    }
+
+    @Test
+    void testCreateAccountNoName() {
+        // Arrange - Setup the code to be used
+        UserResources userRes = new UserResources();
+
+        // Act - Execute the method to be tested
+        Response response = userRes.createAccount("newpassword@gmail.com", "", "pa55w0rd");
+
+        // Assert - Check if the method postconditions is as expected
+        assertEquals(409, response.getStatus());
     }
 }

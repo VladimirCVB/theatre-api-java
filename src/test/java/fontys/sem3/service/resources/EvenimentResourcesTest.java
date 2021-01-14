@@ -60,6 +60,94 @@ public class EvenimentResourcesTest {
     }
 
     @Test
+    void TestCreateEvenimentNoName() throws SQLException {
+
+        // Arrange - Setup the code to be used
+        EvenimentResources eventRes = new EvenimentResources();
+
+        int id = 1;
+        String name = "";
+        String date = "12.10.2020";
+        String description = "test description";
+        String imgSrc = "none";
+
+        Eveniment event = new Eveniment(id, name, description, date, imgSrc, true);
+        event.setSeats(10);
+
+        // Act - Execute the method to be tested
+        Response response = eventRes.createEveniment(event);
+
+        // Assert - Check if the method postconditions is as expected
+        assertEquals(409, response.getStatus());
+    }
+
+    @Test
+    void TestCreateEvenimentNoDate() throws SQLException {
+
+        // Arrange - Setup the code to be used
+        EvenimentResources eventRes = new EvenimentResources();
+
+        int id = 1;
+        String name = "Test Title";
+        String date = "";
+        String description = "test description";
+        String imgSrc = "none";
+
+        Eveniment event = new Eveniment(id, name, description, date, imgSrc, true);
+        event.setSeats(10);
+
+        // Act - Execute the method to be tested
+        Response response = eventRes.createEveniment(event);
+
+        // Assert - Check if the method postconditions is as expected
+        assertEquals(409, response.getStatus());
+    }
+
+    @Test
+    void TestCreateEvenimentNoDescription() throws SQLException {
+
+        // Arrange - Setup the code to be used
+        EvenimentResources eventRes = new EvenimentResources();
+
+        int id = 1;
+        String name = "Test Title";
+        String date = "12.10.2020";
+        String description = "";
+        String imgSrc = "none";
+
+        Eveniment event = new Eveniment(id, name, description, date, imgSrc, true);
+        event.setSeats(10);
+
+        // Act - Execute the method to be tested
+        Response response = eventRes.createEveniment(event);
+
+        // Assert - Check if the method postconditions is as expected
+        assertEquals(409, response.getStatus());
+    }
+
+    @Test
+    void TestCreateEvenimentNoImgSrc() throws SQLException {
+
+        // Arrange - Setup the code to be used
+        EvenimentResources eventRes = new EvenimentResources();
+
+        int id = 1;
+        String name = "Test Title";
+        String date = "12.10.2020";
+        String description = "test description";
+        String imgSrc = "";
+
+        Eveniment event = new Eveniment(id, name, description, date, imgSrc, true);
+        event.setSeats(10);
+
+        // Act - Execute the method to be tested
+        Response response = eventRes.createEveniment(event);
+
+        // Assert - Check if the method postconditions is as expected
+        assertEquals(409, response.getStatus());
+    }
+
+    @Test
     void TestGetEvenimentPath() throws SQLException {
 
         // Arrange - Setup the code to be used

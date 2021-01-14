@@ -137,24 +137,36 @@ public class JDBCEventsRepository extends JDBCRepository{
     }
 
     public boolean addEveniment(Eveniment event){
-        try{
-            String sql = "INSERT INTO events ( name, date, description, imgSrc, access ) VALUES (?, ?, ?, ?, ?)";
-            prepStatement = connect.prepareStatement(sql);
-            prepStatement.setString(1, event.getName());
-            prepStatement.setString(2, event.getDate());
-            prepStatement.setString(3, event.getDescription());
-            prepStatement.setString(4, event.getImgSrc());
-            prepStatement.setBoolean(5, event.getAccess());
 
-            prepStatement.executeUpdate();
+        if(checkEvenimentData(event)){
+            try{
+                String sql = "INSERT INTO events ( name, date, description, imgSrc, access ) VALUES (?, ?, ?, ?, ?)";
+                prepStatement = connect.prepareStatement(sql);
+                prepStatement.setString(1, event.getName());
+                prepStatement.setString(2, event.getDate());
+                prepStatement.setString(3, event.getDescription());
+                prepStatement.setString(4, event.getImgSrc());
+                prepStatement.setBoolean(5, event.getAccess());
 
-            addEventEarnings(event.getDate(), event.getName());
-            addSeats(event.getSeats());
+                prepStatement.executeUpdate();
 
+                addEventEarnings(event.getDate(), event.getName());
+                addSeats(event.getSeats());
+
+                return true;
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+
+        return false;
+    }
+
+    private boolean checkEvenimentData(Eveniment event){
+        if(event.getName() != "" && !event.getName().isEmpty() && event.getDate() != "" && !event.getDate().isEmpty()
+                && event.getDescription() != "" && !event.getDescription().isEmpty() && event.getImgSrc() != "" && !event.getImgSrc().isEmpty()){
             return true;
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
 
         return false;

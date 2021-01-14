@@ -4,6 +4,8 @@ import fontys.sem3.service.model.*;
 
 import java.sql.*;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class JDBCUsersRepository extends JDBCRepository{
 
@@ -130,7 +132,7 @@ public class JDBCUsersRepository extends JDBCRepository{
     }
 
     public boolean addUserAccount(String name, String email, String password){
-        if(!checkEmail(email)){
+        if(!checkEmail(email) && checkUserDetails(name, email, password)){
             try{
                 String sql = "INSERT INTO users ( name, email, password, role ) VALUES (?, ?, ?, ?)";
                 prepStatement = connect.prepareStatement(sql);
@@ -164,6 +166,18 @@ public class JDBCUsersRepository extends JDBCRepository{
             if(selectedEmail != ""){ return true; }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+
+        return false;
+    }
+
+    private boolean checkUserDetails(String name, String email, String password){
+        String regex = "^(.+)@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+
+        if(name != null && !name.isEmpty() && email != null && !email.isEmpty() && password != null && !password.isEmpty()){
+            Matcher matcher = pattern.matcher(email);
+            return matcher.matches();
         }
 
         return false;
