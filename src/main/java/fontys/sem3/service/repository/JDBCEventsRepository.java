@@ -116,26 +116,6 @@ public class JDBCEventsRepository extends JDBCRepository{
         return true;
     }
 
-    public boolean updateEvenimentAccess(int eventId, int access) {
-        String statement = "";
-
-        if(access == 0){
-            statement = "UPDATE events SET access = 0 WHERE id = ?";
-        }
-
-        try{
-            prepStatement = connect.prepareStatement(statement);
-            prepStatement.setInt(1, eventId);
-            prepStatement.executeUpdate();
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-            return false;
-        }
-
-        return true;
-    }
-
     public boolean addEveniment(Eveniment event){
 
         if(checkEvenimentData(event)){

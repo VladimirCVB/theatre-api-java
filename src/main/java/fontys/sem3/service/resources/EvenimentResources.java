@@ -81,20 +81,6 @@ public class EvenimentResources {
         }
     }
 
-    @PUT //PUT at http://localhost:XXXX/theater/events/2
-    @RolesAllowed({ "administrator" })
-    @Consumes(MediaType.APPLICATION_JSON)
-    @JWTTokenNeeded
-    @Path("/access/{id}")
-    public Response updateEvenimentAccess(@PathParam("id") int id, int access) {
-        // Idempotent method. Always update (even if the resource has already been updated before).
-        if (JDBC_EVENTS_REPOSITORY.updateEvenimentAccess(id, access)) {
-            return Response.noContent().header("Access-Control-Allow-Origin", "*").build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("Please provide a valid event id.").header("Access-Control-Allow-Origin", "*").build();
-        }
-    }
-
     @DELETE //DELETE at http://localhost:XXXX/theater/events/1
     @RolesAllowed({ "administrator" })
     @Path("/{id}")
