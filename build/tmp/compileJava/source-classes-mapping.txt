@@ -36,8 +36,8 @@ fontys/sem3/service/authentication/AuthenticationFilter.java
  fontys.sem3.service.authentication.AuthenticationFilter
 fontys/sem3/service/authentication/JWTTokenNeededFilter.java
  fontys.sem3.service.authentication.JWTTokenNeededFilter
+fontys/sem3/service/repository/JDBCEventsRepository.java
+ fontys.sem3.service.repository.JDBCEventsRepository
 fontys/sem3/service/resources/EvenimentResources.java
  fontys.sem3.service.resources.EvenimentResources
  fontys.sem3.service.resources.EvenimentResources$1
-fontys/sem3/service/repository/JDBCEventsRepository.java
- fontys.sem3.service.repository.JDBCEventsRepository

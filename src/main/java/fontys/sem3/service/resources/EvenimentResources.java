@@ -82,12 +82,17 @@ public class EvenimentResources {
     }
 
     @DELETE //DELETE at http://localhost:XXXX/theater/events/1
+    @JWTTokenNeeded
     @RolesAllowed({ "administrator" })
     @Path("/{id}")
     public Response deleteEveniment(@PathParam("id") int id) {
-         JDBC_EVENTS_REPOSITORY.deleteEveniment(id);
-        // Idempotent method. Always return the same response (even if the resource has already been deleted before).
-        return Response.noContent().header("Access-Control-Allow-Origin", "*").build();
+        if(JDBC_EVENTS_REPOSITORY.deleteEveniment(id)){
+            // Idempotent method. Always return the same response (even if the resource has already been deleted before).
+            return Response.noContent().header("Access-Control-Allow-Origin", "*").build();
+        } else {
+            String entity =  "You need to be an administrator.";
+            return Response.status(Response.Status.CONFLICT).header("Access-Control-Allow-Origin", "*").entity(entity).build();
+        }
     }
 
     @POST //POST at http://localhost:XXXX/theater/events
