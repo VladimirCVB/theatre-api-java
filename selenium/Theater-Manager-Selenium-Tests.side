@@ -98,51 +98,6 @@
       "value": ""
     }]
   }, {
-    "id": "8a16a765-79f2-43a7-86fe-b1cba993f36d",
-    "name": "See Events on Home Page",
-    "commands": [{
-      "id": "17707c76-a623-4dd9-882f-d63f76dc6243",
-      "comment": "",
-      "command": "open",
-      "target": "http://localhost:8080/#/connectivity",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "14db5f96-2732-4cdc-ac29-e0ceca5f5b6c",
-      "comment": "",
-      "command": "setWindowSize",
-      "target": "1536x824",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "56f87317-c5fb-46fa-b84d-e631853b2902",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Home",
-      "targets": [
-        ["linkText=Home", "linkText"],
-        ["css=.px-3:nth-child(2)", "css:finder"],
-        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
-        ["xpath=//div[@id='nav']/nav/div/div/div/div[2]/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/')]", "xpath:href"],
-        ["xpath=//a", "xpath:position"],
-        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "12b3b033-f9c0-4a88-af80-82b60eebce42",
-      "comment": "",
-      "command": "click",
-      "target": "css=.content-between:nth-child(1) .text-justify",
-      "targets": [
-        ["css=.content-between:nth-child(1) .text-justify", "css:finder"],
-        ["xpath=//div[@id='content']/div/div/div/div/p", "xpath:idRelative"],
-        ["xpath=//p", "xpath:position"],
-        ["xpath=//p[contains(.,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sed laoreet velit. Cras et ornare dui. Morbi sollicitudin posuere sem in ultrices. Sed sagittis, velit interdum auctor luctus, tortor massa rhoncus dui, quis finibus ex orci nec nibh. Curabitur eu condimentum ex. Donec id dolor sed turpis interdum eleifend.')]", "xpath:innerText"]
-      ],
-      "value": "Lorem"
-    }]
-  }, {
     "id": "6fc7bd2d-5c8f-4a7d-8a13-cde375f81c10",
     "name": "Log In Administrator",
     "commands": [{
@@ -375,7 +330,7 @@
         ["xpath=//div[@id='app']/div[3]/div/form/div/div/div/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "Test Title"
+      "value": "Test Event 1"
     }, {
       "id": "23dc3e02-9122-4c1c-a704-fe1eb3661da7",
       "comment": "",
@@ -401,7 +356,7 @@
         ["xpath=//div[@id='app']/div[3]/div/form/div/div/div/div[2]/textarea", "xpath:idRelative"],
         ["xpath=//textarea", "xpath:position"]
       ],
-      "value": "bla"
+      "value": "Description for this event"
     }, {
       "id": "f12c64a2-8d67-4fe7-9600-8a4e9bd66f70",
       "comment": "",
@@ -453,7 +408,7 @@
         ["xpath=//div[@id='app']/div[3]/div/form/div/div/div/div[4]/input", "xpath:idRelative"],
         ["xpath=//div[4]/input", "xpath:position"]
       ],
-      "value": "12"
+      "value": "imageSource"
     }, {
       "id": "3ca50011-8442-4239-bcfb-72cf2445b848",
       "comment": "",
